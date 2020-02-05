@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\openssl-1.1.1b\lib;$(SolutionDir)external\lua\lib;$(SolutionDir)build\TBSGFramework\$(Platform)\$(Configuration)\bin;$(SolutionDir)build\BasicLogger\$(Platform)\$(Configuration)\bin;$(SolutionDir)build\ptl\$(Platform)\$(Configuration)\bin;$(SolutionDir)build\DatabaseAPI\$(Platform)\$(Configuration)\bin;$(SolutionDir)external\mariadb\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmariadb.lib;mariadbclient.lib;mysqlservices.lib;mariadbclientpp-$(Configuration).lib;CRYPT32.lib;libcrypto.lib;libssl.lib;ptl.lib;lua53.lib;BasicLogger.lib;Enet.lib;NetworkLib.lib;TBSGFramework.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;DatabaseAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)DatabaseAPI\include;$(SolutionDir)external\openssl-1.1.1b\include;$(SolutionDir)external\FlatValueMap\include;$(SolutionDir)external\sol2-develop;$(SolutionDir)external\lua\include;$(SolutionDir)external\pugixml\;$(SolutionDir)external\Catch2\;$(SolutionDir)external\rapidjson\include;$(SolutionDir)external\basiclogger\include;$(SolutionDir)external\basiclogger\external\fmt\include;$(SolutionDir)external\ptl\include;$(SolutionDir)external\mariadb\include;$(SolutionDir)external\mariadb\include\mysql;$(SolutionDir)external\eventpp\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/NODEFAULTLIB:library /bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;COF_USE_LOGGER;DO_NOT_MAKE_USE_OF_CUSTOM_ALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>msbuild $(SolutionPath) /target:Libraries\ptl:Clean,Libraries\ptl /p:Configuration=$(Configuration) /p:PlatformToolset=v141 /p:Platform=$(Platform) /p:ForceImportBeforeCppTargets=$(SolutionDir)ptl\extra\enable_alloc.props</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

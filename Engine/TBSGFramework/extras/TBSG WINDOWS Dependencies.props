@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\openssl-1.1.1b\include;$(OutDir)Include;$(SolutionDir)TBSGFramework\include\rendering\dx\d3dx12;$(SolutionDir)external\DirectXTex\DirectXTex;$(SolutionDir)external\DirectXTex\WICTextureLoader;$(SolutionDir)external\DirectXTex\DDSTextureLoader;$(WindowsSDK_IncludePath);%(AdditionalIncludeDirectories);$(SolutionDir)external\ImGui;$(SolutionDir)external\pugixml;$(SolutionDir)external\cpp-httplib</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PLATFORM_WINDOWS=1;_UNICODE;UNICODE;GLM_FORCE_DEPTH_ZERO_TO_ONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>MaxSpeed</Optimization>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>CRYPT32.lib;libcrypto.lib;libssl.lib;lua53.lib;Enet.lib;NetworkLib.lib;Dwrite.lib;D3D11.lib;D2d1.lib;D3D12.lib;DXGI.lib;D3DCompiler.lib;xinput.lib;ProfilerCore64.lib;fmod64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\openssl-1.1.1b\lib;$(SolutionDir)external\FMOD\lib\$(Platform);$(SolutionDir)external\brofiler\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

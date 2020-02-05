@@ -1,0 +1,50 @@
+{
+    "projects": "E:\\Y2018D-Y2-DigitalDeckbuilder\\Projects\\",
+    "database": "db/projects.json",
+    "example_project": "db/data.zip",
+    "programs": {
+        "blender": "D:\\Blender\\blender.exe",
+        "code": "C:\\Program Files\\Microsoft VS Code\\Code.exe",
+        "excel": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE",
+        "lua": "E:\\Y2018D-Y2-DigitalDeckbuilder\\Tools\\LuaValidator\\LuaValidator.exe",
+        "viewer": "C:\\Users\\student\\Perforce\\Simon170636_DESKTOP-UFNEGPA_7635\\Y2018D-Y2-DigitalDeckbuilder\\Tools\\ViewerApplication\\ViewerApplication.exe"
+    },
+    "folders": {
+        "assets": "data",
+        "client": "Client",
+        "server": "Server"
+    },
+    "google": {
+        "id": "100778159667-913er33de74i81c8t8ntfvvjubqgefi0.apps.googleusercontent.com",
+        "secret": "G4RXp_S3dv5ORJJ8IXIGc4-H",
+        "redirect": "https://cyroxx.de"
+    },
+    "mysql": {
+        "host": "db1.zsnode.com",
+        "port": 3306,
+        "user": "tbsg_user",
+        "password": "{FN^N^E}~@a*Z5XG0eK#G*TpSs36+1eH",
+        "database": "tbsg_database"
+    },
+    "repo": {
+        "host": "h2752216.stratoserver.net",
+        "port": "21",
+        "user": "tbsg",
+        "password": "U0ru@1i0",
+        "secure": true
+    },
+    "apps": {
+        "client": {
+            "autoupdate": false,
+            "lastcheck": 1558891893554,
+            "currentversion": 1556041620000,
+            "latestversion": 1556041620000
+        },
+        "server": {
+            "autoupdate": false,
+            "lastcheck": 1558898228535,
+            "currentversion": 1556041620000,
+            "latestversion": 1556041620000
+        }
+    }
+}

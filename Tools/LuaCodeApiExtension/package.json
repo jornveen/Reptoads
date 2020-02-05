@@ -1,0 +1,57 @@
+{
+  "name": "TBSG-LuaApi",
+  "displayName": "TBSG Lua API autocomplete",
+  "description": "Autocompletion for the TBSG Lua API",
+  "version": "0.0.3",
+  "publisher": "TBSG",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simonvizzini/vscode-factorio-lua-api-autocomplete.git"
+  },
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.20.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:lua"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "languages": [
+      {
+        "id": "lua",
+        "extensions": [
+          ".lua"
+        ],
+        "aliases": [
+          "lua"
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "node parse.js && tsc -p ./",
+    "compile": "npm install -g vsce & vsce package",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.64",
+    "@types/mocha": "^2.2.32",
+    "@types/node": "^6.14.3",
+    "html-to-text": "^3.2.0",
+    "mocha": "^2.3.3",
+    "osmosis": "^1.1.4",
+    "ts-node": "^3.0.4",
+    "typescript": "^2.0.3",
+    "vscode": "^1.0.0"
+  }
+}

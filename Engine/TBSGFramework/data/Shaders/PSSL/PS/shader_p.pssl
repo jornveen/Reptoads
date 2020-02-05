@@ -1,0 +1,22 @@
+﻿/* SIE CONFIDENTIAL
+PlayStation(R)4 Programmer Tool Runtime Library Release 06.008.001
+* Copyright (C) 2013 Sony Interactive Entertainment Inc.
+* All Rights Reserved.
+*/
+
+#include "DefaultShaderBuffers.h"
+
+SamplerState samp0 : register(s0);
+Texture2D diffuseTexture : register(t0);
+Texture2D emissiveTex : register(t1);
+RW_Texture2D<float4> emissiveTexture : register(u0);
+
+float4 main(VS_OUTPUT Input) : S_TARGET_OUTPUT
+{
+	uint2 pixel;
+	pixel.x = (uint)Input.Position.x;
+	pixel.y = (uint)Input.Position.y;
+	emissiveTexture[pixel] = float4(1.0f, 1.0f,  1.0f, 1.0f) * emissiveTex.Sample(samp0, Input.UV);
+	return diffuseTexture.Sample(samp0, Input.UV) * materialDiffuseColor;
+}
+

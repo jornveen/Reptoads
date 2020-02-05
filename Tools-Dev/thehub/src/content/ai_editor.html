@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The HUB</title>
+    <!-- bootsrap css include-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- font awesome for icons:-->
+    <link rel="stylesheet" href="../css/fontawesome.css">
+    <link rel="stylesheet" href="../css/notification.css">
+
+    <style>
+        html,
+        body {
+            height: 95%;
+        }
+
+        .titlebar {
+            -webkit-user-select: none;
+            -webkit-app-region: drag;
+        }
+
+        .titlebar-button {
+            -webkit-app-region: no-drag;
+        }
+
+        input[type='checkbox'] {
+            border: none !important;
+            display: block;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- header-->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark titlebar">
+            <a class="navbar-brand" href="#"></a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a id="back-btn" class="titlebar-button project-new nav-link  text-light" href="#"><i
+                            class="fas fa-reply"></i>
+                        Back</a>
+                </li>
+            </ul>
+            <div class="btn-group" role="group">
+                <button value="true" id="min-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-minimize text-light"></i></button>
+                <button value="true" id="max-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-maximize text-light"></i></button>
+                <button value="true" id="restore-btn" class="titlebar-button btn btn-default my-2 my-sm-0"><i
+                        class="far fa-window-restore text-primary"></i></button>
+                <button value="true" id="close-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="far fa-window-close text-warning"></i></button>
+            </div>
+        </nav>
+    </header>
+    <!-- /header-->
+    <!-- main-->
+    <main role='main' style="margin-top:64px;">
+        <div class="container-fluid">
+            <div class="jumbotron">
+                <h1 class="display-4">AI configuration Tool<project></project>
+                </h1>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="config-tab-pilar" data-toggle="tab" href="#config-tab" role="tab"
+                            aria-controls="config-tab" aria-selected="true">Configurate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="simulate-game-tab-pilar" data-toggle="tab" href="#simulate-game-tab"
+                            role="tab" aria-controls="simulate-game-tab" aria-selected="false">Simulate</a>
+                    </li>
+                </ul>
+                <br>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="config-tab" role="tabpanel" aria-labelledby="config-tab-pilar">
+                        <!-- tabs: config -->
+                        <ul class="nav nav-pills nav-fill">
+                            <li class="nav-item">
+                                <a class="nav-link disabled" href="#">Settings: </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active modify-type" data-type="Health" href="#">Health</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link modify-type d-none" data-type="Attack" href="#">Attack</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link modify-type" data-type="Armor" href="#">Armor</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link modify-type d-none" data-type="Costs" href="#">Costs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link modify-type" data-type="CardsInHand" href="#">CardsInHand</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link modify-type" data-type="CardsInDeck" href="#">CardsInDeck</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link modify-type d-none" data-type="WeaponAttack"
+                                    href="#">WeaponAttack</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link modify-type d-none" data-type="WeaponDurability"
+                                    href="#">WeaponDurability</a>
+                            </li>
+                        </ul>
+                        <hr>
+                        <p>Settings for: </p>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active settings" data-type="AI">
+                                <input type="radio" name="options" autocomplete="off" checked> AI
+                            </label>
+                            <label class="btn btn-secondary settings" data-type="rival">
+                                <input type="radio" name="options" autocomplete="off"> Rival
+                            </label>
+                            <label class="btn btn-secondary settings" data-type="monster">
+                                <input type="radio" name="options" autocomplete="off"> Monster
+                            </label>
+                        </div>
+
+                        <ul class="nav nav-tabs" id="graphTab" role="tablist" style="margin-top:16px;">
+                            <li class="nav-item">
+                                <a class="nav-link active modify-func" data-type="0" data-toggle="tab" href="#l"
+                                    role="tab" aria-selected="true">linear line</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link modify-func" data-type="1" data-toggle="tab" href="#qc" role="tab"
+                                    aria-selected="false">quadratic curve</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link modify-func" data-type="2" data-toggle="tab" href="#sc" role="tab"
+                                    aria-selected="false">sigmoid curve</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link modify-func" data-type="3" data-toggle="tab" href="#pl" role="tab"
+                                    aria-selected="false">piecewise linear line</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="graphTabs">
+                            <div class="tab-pane active" data-type="0" id="l" role="tabpanel">
+                                <!-- linear-->
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Should Graph Flip</th>
+                                            <th scope="col">Max Range</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="checkbox" data-func="0">
+                                            </td>
+                                            <td><input data-func="0" type="number" placeholder="100"
+                                                    class="form-control">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-info" role="alert">
+                                    <p>Explanation:</p>
+                                    <ul>
+                                        <li>Bool shouldGraphFlip<br>This determines if the formula should be flipped
+                                            around (1 –
+                                            utility score)</li>
+                                        <li>Float maxRange<br>This is the range of the graph (for example: maxHealth)
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- ./linear-->
+                            </div>
+                            <div class="tab-pane" id="qc" role="tabpanel" data-type="1">
+                                <!-- qc-->
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Should Graph Flip</th>
+                                            <th scope="col">Max Range</th>
+                                            <th scope="col">Steepness</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="checkbox" data-func="1">
+                                            </td>
+                                            <td><input data-func="1" type="number" class="form-control"
+                                                    placeholder="100">
+                                            </td>
+                                            <td><input data-func="1" data-step="true" type="number" class="form-control"
+                                                    placeholder="100">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-info" role="alert">
+                                    <p>Explanation:</p>
+                                    <ul>
+                                        <li>Bool shouldGraphFlip<br>This determines if the formula should be flipped
+                                            around (1 –
+                                            utility score)</li>
+                                        <li>Float maxRange<br>This is the range of the graph (for example: maxHealth)
+                                        </li>
+                                        <li>Float steepness<br>This determines how steep the graph should be.</li>
+                                    </ul>
+                                </div>
+                                <!-- ./qc-->
+                            </div>
+                            <div class="tab-pane" id="sc" role="tabpanel" data-type="2">
+                                <!-- sc-->
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Should Graph Flip</th>
+                                            <th scope="col">Max Range</th>
+                                            <th scope="col">Steepness</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="checkbox" data-func="2">
+                                            </td>
+                                            <td><input data-func="2" type="number" class="form-control"
+                                                    placeholder="100">
+                                            </td>
+                                            <td><input data-func="2" type="number" class="form-control"
+                                                    placeholder="100">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-info" role="alert">
+                                    <p>Explanation:</p>
+                                    <ul>
+                                        <li>Bool shouldGraphFlip<br>This determines if the formula should be flipped
+                                            around (1 –
+                                            utility score)</li>
+                                        <li>Float maxRange<br>This is the range of the graph (for example: maxHealth)
+                                        </li>
+                                        <li>Float steepness<br>This determines how steep the graph should be.</li>
+                                    </ul>
+                                </div>
+                                <!-- ./sc-->
+                            </div>
+                            <div class="tab-pane" id="pl" role="tabpanel" data-type="3">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Max Range</th>
+                                            <th scope="col">Utility Graph</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">
+                                                <!-- table -->
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><input type="number" data-set="6" id="pcl-range"
+                                                                    class="form-control" placeholder="100" value="100">
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:55px;">
+                                                            <td> </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Utility Score</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </th>
+                                            <td>
+                                                <!-- table -->
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><input id="start-r1" type="number"
+                                                                    class="form-control disabled" disabled
+                                                                    placeholder="100">
+                                                            </td>
+                                                            <td><input id="start-r2" type="number"
+                                                                    class="form-control disabled" disabled
+                                                                    placeholder="100">
+                                                            </td>
+                                                            <td><input id="start-r3" type="number"
+                                                                    class="form-control disabled" disabled
+                                                                    placeholder="100">
+                                                            </td>
+                                                            <td><input id="start-r4" type="number"
+                                                                    class="form-control disabled" disabled
+                                                                    placeholder="100">
+                                                            </td>
+                                                            <td><input id="start-r5" type="number"
+                                                                    class="form-control disabled" disabled
+                                                                    placeholder="100">
+                                                            </td>
+                                                            <td><input id="start-r6" type="number"
+                                                                    class="form-control disabled" disabled
+                                                                    placeholder="100">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">Start</th>
+                                                            <th scope="row">Part 1</th>
+                                                            <th scope="row">Part 2</th>
+                                                            <th scope="row">Part 3</th>
+                                                            <th scope="row">Part 4</th>
+                                                            <th scope="row">Part 5</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input data-func="3" data-set="0" type="number"
+                                                                    class="form-control" placeholder="0.1">
+                                                            <td><input data-func="3" data-set="1" type="number"
+                                                                    class="form-control" placeholder="0.3">
+                                                            <td><input data-func="3" data-set="2" type="number"
+                                                                    class="form-control" placeholder="0.4">
+                                                            <td><input data-func="3" data-set="3" type="number"
+                                                                    class="form-control" placeholder="0.5">
+                                                            <td><input data-func="3" data-set="4" type="number"
+                                                                    class="form-control" placeholder="0.6">
+                                                            <td><input data-func="3" data-set="5" type="number"
+                                                                    class="form-control" placeholder="0.7">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- end of tabke-->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <button class="btn btn-success" id="save-ai"><i class="fas fa-save"></i> Save</button>
+                        <!-- tab row -->
+                    </div>
+                    <div class="tab-pane" id="simulate-game-tab" role="tabpanel"
+                        aria-labelledby="simulate-game-tab-pilat">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-2">
+                                    <label for="simnumber" class="font-weight-bold">Simulation Count</label>
+                                    <input type="number" class="form-control" value="5" id="simnumber">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="dropdown1" class="font-weight-bold">Select Monster Deck</label>
+                                    <div id="dropdown1" class="input-group">
+                                        <input type="text" class="form-control"
+                                            aria-label="Text input with dropdown button" value="ExampleMonsterDeck"
+                                            id="select-monster-deck-input">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" player="0" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
+                                                Deck</button>
+                                            <div class="dropdown-menu" id="select-monster-deck">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="dropdown2" class="font-weight-bold">Select Deck for Player 1</label>
+                                    <div id="dropdown2" class="input-group">
+                                        <input type="text" class="form-control"
+                                            aria-label="Text input with dropdown button" value="TestDeck1"
+                                            id="select-player1-deck-input">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" player="1" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
+                                                Deck</button>
+                                            <div class="dropdown-menu" id="select-player1-deck">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="dropdown3" class="font-weight-bold">Select Deck for Player 2</label>
+                                    <div id="dropdown3" class="input-group">
+                                        <input type="text" class="form-control"
+                                            aria-label="Text input with dropdown button" value="TestDeck2"
+                                            id="select-player2-deck-input">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" player="2" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select
+                                                Deck</button>
+                                            <div class="dropdown-menu" id="select-player2-deck">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <button class="btn btn-info" id="simulate-game"><i class="fas fa-play"></i> Simulate
+                            Game</button>
+
+                            <div class="card" style="margin:15px;">
+                                <div class="card-header">
+                                    Simualtion Output:
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="textOutputArea" rows="16" style="font-size: 15px;"
+                                            readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="d-none" id="simulate-progress-container" style="margin:15px;">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <!--/main-->
+
+    <!-- bootsrap & jQuery includes:-->
+    <!-- electron compatible:-->
+    <script>
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
+    <!-- /electron compatible-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.min.js"></script>
+    <script src="../js/notification.js"></script>
+    <!-- electron compatible:-->
+    <script>if (window.module) module = window.module;</script>
+    <script>
+        var AISettings = {};
+        var AISettingsCopy = AISettings;
+
+
+        const fs = require('fs');
+        const p = require('path');
+        const rendering = require("../js/redering.js");
+        const projectView = require("../js/project_view.js");
+        const G = require("../js/google-utils.js");
+        const SHEETS = require("../js/google-sheets.js");
+        const AI = require("../js/ai_data.js");
+        const THEHUB = require("../js/thehub.js");
+        const config = require("../js/config.js");
+        const webservices = require("../js/webservices");
+
+        THEHUB.ParseAppArguments(
+            {
+                arguemnt: "--dev-mode", callback: () => {
+                    $("#build-li").html("");
+                }
+            }
+        );
+
+        THEHUB.LoadProjectFromCookies();
+
+        THEHUB.OnCookiesLoaded((project) => {
+            THEHUB.ValidateProjectAndLoad();
+        });
+
+        THEHUB.OnProjectValidationError((err, project) => {
+            $("#project-header-name").text("Project: " + project.name);
+            $("main").html("<div class='container'><div class='alert alert-danger'><i class='fas fa-exclamation-triangle'></i> <strong>Oops...</strong> " + err + " <br><br><a  class='back-btn btn btn-secondary text-light' href='project_chooser.html'><i class='fas fa-reply'></i> Back</a></div></div>");
+        });
+
+
+        function LoadDatabase() {
+            var projectName = THEHUB.GetCurrentProject().realname;
+            var assetDir = config.MakeAssetDir(projectName);
+            var path = p.join(assetDir.server.root, "data", "AI", "ai.ai");
+            if (!fs.existsSync(path)) {
+                THEHUB.NotifInfo("Info", "Could not find the ai_data.ai file uses default values");
+                AISettings = JSON.parse(fs.readFileSync(p.join(__dirname, "../../db/ai_default.json"), 'utf8'));
+            } else {
+                AISettings = JSON.parse(fs.readFileSync(path, 'utf8'));
+            }
+        }
+
+        THEHUB.OnProjectValidated((project) => {
+            //load data from JSON file
+            LoadDatabase();
+            //main function
+            MainFunctions(project);
+            LoadValuesForGraphOfSection();
+            $(".modify-type").removeClass("active");
+            $(".modify-type[data-type='" + AISettings.appliesTo + "']").addClass("active");
+            $(".settings input").prop("checked", false);
+            $(".settings").removeClass("active")
+            $(".settings[data-type='" + AISettings.appliesTo + "']").addClass("active");
+            $(".settings[data-type='" + AISettings.appliesTo + "'] input").prop("checked");
+        });
+        document.onreadystatechange = () => {
+            if (document.readyState == "complete") {
+                rendering.handleWindowControls();
+            }
+        }
+        // updates the input fields
+        function UpdateInputFields(id, graphData, graphDataIndex) {
+            console.log("[AI CONFIG] UPDATE INPUT")
+            var index = 0;
+            if (id != 3) {
+                $("input[data-func='" + id + "']").each(function () {
+                    if ($(this).attr("type") === "checkbox") {
+                        $(this).prop("checked", graphData[graphDataIndex].arguments[index]);
+                    } else {
+                        $(this).val(graphData[graphDataIndex].arguments[index]);
+                    }
+                    index++;
+                })
+            } else {
+                for (let i = 0; i < 7; i++) {
+                    let $this = $("input[data-set='" + i + "']")
+                    $this.val(graphData[graphDataIndex].arguments[i]);
+                }
+            };
+        }
+
+
+
+        function LoadValuesForGraphOfSection() {
+            console.log("[LoadValuesForGraphOfSection]")
+            var activeGraphs = AISettings.values[AISettings.active].active;
+            var values = AISettings.values[AISettings.active].values;
+            var graphData = [values[activeGraphs[0]].AI, values[activeGraphs[1]].rival, values[activeGraphs[2]].monster];
+            $("#graphTab li a").removeClass("active");
+            $("#graphTabs .tab-pane").removeClass("active");
+            var id = 0;
+            var graphDataIndex = 0;
+            if (AISettings.appliesTo === "AI") {
+                id = activeGraphs[0];
+            } else if (AISettings.appliesTo === "rival") {
+                id = activeGraphs[1];
+                graphDataIndex = 1;
+            } else {
+                id = activeGraphs[1];
+                graphDataIndex = 2;
+            }
+
+            $("#graphTab li a[data-type='" + id + "']").addClass("active");
+            $("#graphTabs .tab-pane[data-type='" + id + "']").addClass("active");
+            UpdateInputFields(id, graphData, graphDataIndex);
+        }
+
+
+        function setFuncDataForL(data) {
+            var value = parseFloat(data);
+            var active = AISettings.active
+            var appliesTo = AISettings.appliesTo;
+            var func = AISettings.func;
+            AISettings.values[active].values[func][appliesTo].arguments[0] = $("input[data-func='0']").prop("checked");
+            AISettings.values[active].values[func][appliesTo].arguments[1] = value;
+            console.log("[setFuncDataForSLL]")
+            console.log(AISettings.values[active].values[func][appliesTo].arguments)
+        }
+
+        $("input[data-func='0']").change(function () {
+            var active = AISettings.active
+            var appliesTo = AISettings.appliesTo;
+            var func = AISettings.func;
+            AISettings.values[active].values[func][appliesTo].arguments[0] = $("input[data-func='0'][type='checkbox']").prop("checked");
+            AISettings.values[active].values[func][appliesTo].arguments[1] = parseFloat($("input[data-func='0'][type='number']").val());
+            console.log(AISettings.values[active].values[func][appliesTo].arguments)
+        });
+        $("input[data-func='1']").change(function () {
+            var active = AISettings.active
+            var appliesTo = AISettings.appliesTo;
+            var func = AISettings.func;
+            AISettings.values[active].values[func][appliesTo].arguments[0] = $("input[data-func='1'][type='checkbox']").prop("checked");
+            AISettings.values[active].values[func][appliesTo].arguments[1] = parseFloat($("input[data-func='1'][type='number']").val());
+            AISettings.values[active].values[func][appliesTo].arguments[2] = parseFloat($("input[data-func='1'][data-step='true']").val());
+            console.log(AISettings.values[active].values[func])
+        });
+        function setFuncDataForSLL(element) {
+            var value = parseFloat($(element).val());
+            var argIndex = $(element).attr("data-set");
+            var active = AISettings.active
+            var appliesTo = AISettings.appliesTo;
+            var func = AISettings.func;
+            AISettings.values[active].values[func][appliesTo].arguments[argIndex] = value;
+            console.log("[setFuncDataForSLL]")
+        }
+        function setDefautRangeInPLL() {
+            var active = AISettings.active
+            var appliesTo = AISettings.appliesTo;
+            var func = AISettings.func;
+            /*
+            Float Utility  = PiecewiseCurve ( 0.5, 0.7, 0.4, 0.2, 0.4, 0.9, currentHealth, maxHealth, 3)
+            currentHealth = 50
+            maxHealth = 100
+            Utility = 0.3
+            */
+            let maxHealth = parseInt($("#pcl-range").val()) / 5;
+            AISettings.values[active].values[func][appliesTo].arguments[6] = maxHealth;
+            $("#start-r1").val(maxHealth * 0);
+            $("#start-r2").val(maxHealth * 1);
+            $("#start-r3").val(maxHealth * 2);
+            $("#start-r4").val(maxHealth * 3);
+            $("#start-r5").val(maxHealth * 4);
+            $("#start-r6").val(maxHealth * 5);
+        }
+
+        function MainFunctions(param) {
+            $("#back-btn").on("click", function () {
+                console.log("GO BACK!");
+                projectView.backToProjectView();
+            });
+
+            var SQL = webservices.Webservice();
+
+            var loadDecks = (id, monster) => {
+                if (monster) {
+                    $("#select-monster-deck").html(`<a class="deckitem dropdown-item" href="#">Loading Decks</a>`);
+                    SQL.GetDecks({ projectId: id, isMonster: true }, (something) => {
+                        if($(`#select-monster-deck`).html() == `<a class="deckitem dropdown-item" href="#">Loading Decks</a>`) $(`#select-monster-deck`).html("");
+                        $("#select-monster-deck").html($("#select-monster-deck").html() + `<a class="deckitem dropdown-item" player="0" href="#">${something.name}</a>`);
+                    }, () => { console.log("ERROR") });
+                } else {
+                    $(`#select-player${id}-deck`).html(`<a class="deckitem dropdown-item" href="#">Loading Decks</a>`);
+                    SQL.GetDecks({ profileId: id }, (something) => {
+                        if($(`#select-player${id}-deck`).html() == `<a class="deckitem dropdown-item" href="#">Loading Decks</a>`) $(`#select-player${id}-deck`).html("");
+                        $(`#select-player${id}-deck`).html($(`#select-player${id}-deck`).html() + `<a class="deckitem dropdown-item" player="${id}" href="#">${something.name}</a>`);
+                    }, () => { console.log("ERROR") });
+                }
+            };
+
+            $(".dropdown-toggle").on("click", function () {
+                if ($(this).attr("player") == 0) {
+                    loadDecks(1, true);
+                } else if ($(this).attr("player") == 1) {
+                    loadDecks(1, false);
+                } else if ($(this).attr("player") == 2) {
+                    loadDecks(2, false);
+                }
+            });
+
+            $(".dropdown-menu").on("click", ".deckitem", function () {
+                if ($(this).attr("player") == 0) {
+                    $("#select-monster-deck-input").val($(this).html());
+                } else if ($(this).attr("player") == 1) {
+                    $("#select-player1-deck-input").val($(this).html());
+                } else if ($(this).attr("player") == 2) {
+                    $("#select-player2-deck-input").val($(this).html());
+                }
+            });
+
+
+
+            // change property: Attack etc.
+            $(".modify-type").click(function () {
+                $(".modify-type").removeClass("active");
+                $(this).addClass("active");
+                AISettings.active = $(this).attr("data-type");
+                LoadValuesForGraphOfSection();
+            });
+            // change rival, AI or monster
+            $(".settings").click(function () {
+                AISettings.appliesTo = $(this).attr("data-type");
+                LoadValuesForGraphOfSection();
+            });
+
+            // change the function
+            $(".modify-func").click(function () {
+                AISettings.func = parseInt($(this).attr("data-type"));
+                var active = AISettings.active
+                var appliesTo = AISettings.appliesTo;
+                var func = AISettings.func;
+                // activates what function is active for which setting:
+                if (appliesTo === "AI") {
+                    AISettings.values[active].active[0] = parseInt(func);
+                } else if (appliesTo === "monster") {
+                    AISettings.values[active].active[2] = parseInt(func);
+                }
+                else {
+                    AISettings.values[active].active[1] = parseInt(func);
+                }
+                // what graph is actrive for what config:
+                var activeGraphs = AISettings.values[AISettings.active].active;
+                // get values for active setting: e.g. for Attack
+                var values = AISettings.values[AISettings.active].values;
+                //get the Graph Data:
+                var graphData = [values[activeGraphs[0]].AI, values[activeGraphs[1]].rival];
+                if (values[activeGraphs[2]] != undefined) {
+                    graphData.push(values[activeGraphs[2]].monster)
+                }
+                var id = 0;
+                //
+                var graphDataIndex = 0;
+                if (AISettings.appliesTo === "AI") {
+                    id = activeGraphs[0];
+                } if (AISettings.appliesTo === "monster") {
+                    id = activeGraphs[2];
+                    graphDataIndex = 2;
+                } else {
+                    id = activeGraphs[1];
+                    graphDataIndex = 1;
+                }
+                UpdateInputFields(id, graphData, graphDataIndex);
+            });
+
+            $("input").keyup(function () {
+                var graphKey = parseInt($(this).attr("data-func"));
+                console.log(graphKey)
+                if ($(this).is("#pcl-range")) {
+                    setDefautRangeInPLL();
+                    return;
+                }
+                // update data:
+                if (graphKey == "3") {
+                    setFuncDataForSLL(this);
+                    return;
+                }
+
+            })
+
+            $("#save-ai").click(function () {
+                var projectName = THEHUB.GetCurrentProject().realname;
+                var assetDir = config.MakeAssetDir(projectName);
+                console.log(AISettings)
+                THEHUB.WriteObjectToFile(assetDir.server.assets + "/AI/ai.ai", AISettings);
+                console.log("[AI System] saved " + assetDir.server.root + "/AI/ai.ai");
+                // generate the actual game relevant data:
+                var outputJson = {};
+                function fillOutPut(value, key, type, index) {
+                    if (!outputJson.hasOwnProperty(key))
+                        outputJson[key] = {};
+                    if (value.values[value.active[index]] != undefined) {
+                        outputJson[key][type] = {
+                            GraphType: value.active[index],
+                            Arguments: []
+                        }
+                        value.values[value.active[index]][type].arguments.forEach(value => {
+                            if (Number.isInteger(value)) {
+                                outputJson[key][type].Arguments.push(parseFloat(value) + 0.001);
+                            } else {
+                                outputJson[key][type].Arguments.push(value)
+                            }
+                        })
+                    }
+                }
+                $.each(AISettings.values, function (key, value) {
+                    fillOutPut(value, key, "AI", 0);
+                    fillOutPut(value, key, "rival", 1);
+                    fillOutPut(value, key, "monster", 2);
+                })
+                var ai_config_file = assetDir.server.root + THEHUB.GetCurrentProject().serverConfig.assets.aiconfig.replace(".", "")
+                THEHUB.WriteObjectToFile(ai_config_file, outputJson);
+                console.log("[AI System] saved " + ai_config_file)
+                THEHUB.NotifSuccess("Success", "Updated");
+            });
+
+            const sheets = G.google.sheets({
+                version: 'v4',
+                auth: G.oauth2Client
+            });
+
+            AI.Init(G, SHEETS, sheets);
+
+            $("#simulate-game").click(function () {
+
+                $("#simulate-progress-container").removeClass("d-none")
+                //Server.exe  1  2  ExampleMonsterDeck  TestDeck1  TestDeck2
+                var counter = 0;
+                var amountOfRuns = parseInt($("#simnumber").val());
+                $(".progress-bar").text("0 / " + amountOfRuns)
+                AI.SimulateGames(["--simulate-game", "1", "2", $("#select-monster-deck-input").val(), $("#select-player1-deck-input").val(), $("#select-player2-deck-input").val(), amountOfRuns], () => {
+                    counter++;
+                    let percent = counter / amountOfRuns;
+                    $(".progress-bar").width((percent * 100) + "%");
+                    $(".progress-bar").text(counter + " / " + amountOfRuns)
+                }, () => {
+                    THEHUB.NotifSuccess("Done", "Simulation is done!");
+                    $(".progress-bar").width("0%");
+                    $(".progress-bar").text("0 / 0")
+                    $("#simulate-progress-container").addClass("d-none")
+                    var files = AI.LoadSimulationData();
+                    var simulations = []
+                    files.forEach(file => {
+                        //console.log(file)
+                        if (file.name.includes("SimulationData-") && !file.isDirectory()) {
+                            var filepath = p.join(THEHUB.GetCurrentProject().path, "Server", "data", "BalancingData", file.name);
+                            simulations.push(JSON.parse(fs.readFileSync(filepath, 'utf8')));
+                            fs.rename(filepath, p.join(THEHUB.GetCurrentProject().path, "Server", "data", "BalancingData", "OldData", file.name), function (err) {
+                                if (err) throw err
+                                console.log('Successfully renamed - AKA moved!')
+                            });
+                        }
+                    });
+
+                    var matches = [];
+                    var randomPickedMatches = [];
+
+                    function getRandom(arr, n) {
+                        var result = new Array(n),
+                            len = arr.length,
+                            taken = new Array(len);
+                        if (n > len)
+                            throw new RangeError("getRandom: more elements taken than available");
+                        while (n--) {
+                            var x = Math.floor(Math.random() * len);
+                            result[n] = arr[x in taken ? taken[x] : x];
+                            taken[x] = --len in taken ? taken[len] : len;
+                        }
+                        return result;
+                    }
+
+                    // make matches based on file number
+                    if (simulations.length >= 10) {
+                        matches = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                        //choose:
+                        console.log("Choosing 10 random!");
+                        randomPickedMatches = getRandom(simulations, matches.length);
+                    } else {
+                        console.log("All simulations picked!");
+                        for (let i = 0; i < simulations.length; i++) {
+                            matches.push(i + 1);
+                            randomPickedMatches.push(simulations[i]);
+                        }
+                    }
+
+                    console.log(randomPickedMatches);
+
+                    var makeName = () => {
+                        var currentdate = new Date();
+                        var name = "Game(" + amountOfRuns + ")_";
+                        name += (currentdate.getDate() < 10 ? '0' : '') + currentdate.getDate() + "/"
+                            + ((currentdate.getMonth() + 1) < 10 ? '0' : '') + (currentdate.getMonth() + 1) + "-"
+                            + (currentdate.getHours() < 10 ? '0' : '') + currentdate.getHours() + ":"
+                            + (currentdate.getMinutes() < 10 ? '0' : '') + currentdate.getMinutes() + ":"
+                            + (currentdate.getSeconds() < 10 ? '0' : '') + currentdate.getSeconds();
+                        return name;
+                    }
+
+
+                    var fileMetadata = {
+                        "mimeType": "application/vnd.google-apps.document",
+                        "name": makeName(),
+                        "driveId": "0ANJk-MLInPYEUk9PVA",
+                        "parents": [
+                            "1bVDDz_2MuWWh16xoqgq7KLvaI_talAdh"
+                        ]
+                    };
+                    G.CopyFile({
+                        resource: fileMetadata,
+                        fileId: "1vbe_vUf-hRqKfSJQrajHgEfno0PyVnN8y8cgfvLmN9Y",
+                        supportsTeamDrives: true,
+                        'fields': 'id'
+                    }, {}, function (err, file) {
+                        if (err) {
+                            console.error(err);
+                        } else {
+                            console.log(matches)
+                            AI.AddSheets(file.data.id, matches.length - 1, () => {
+                                var batchUpdate = [];
+                                var matchesStats = [];
+                                for (let matchIndex = 0; matchIndex < matches.length; matchIndex++) {
+                                    var data = [];
+                                    var stats = {
+                                        player1: {
+                                            PlayerId: 1,
+                                            PlayerDeckId: $("#select-player1-deck-input").val(),
+                                            GameWon: true,
+                                            MonstersKilled: 0,
+                                            CardsPlayedCount: 0,
+                                            DmgTaken: 0,
+                                            ArmorGained: 0,
+                                            ArmorLost: 0,
+                                            HealingGained: 0
+                                        },
+                                        player2: {
+                                            PlayerId: 2,
+                                            PlayerDeckId: $("#select-player2-deck-input").val(),
+                                            GameWon: true,
+                                            MonstersKilled: 0,
+                                            CardsPlayedCount: 0,
+                                            DmgTaken: 0,
+                                            ArmorGained: 0,
+                                            ArmorLost: 0,
+                                            HealingGained: 0
+                                        },
+                                        cardCount: [],
+                                        cardsPct: [],
+                                        utilityscores: [],
+                                        cardNames: [],
+                                        totalCardsPlayed: 0
+                                    };
+                                    for (let x = 0; x < 20; x++) {
+                                        stats.cardCount.push(0);
+                                        stats.cardsPct.push(0);
+                                        stats.utilityscores.push(0);
+                                    }
+                                    var turns = randomPickedMatches[matchIndex].turns;
+                                    if (turns == undefined) {
+                                        continue;
+                                    }
+
+                                    stats.player1.MonstersKilled = randomPickedMatches[matchIndex].monsterskilled;
+                                    stats.player2.MonstersKilled = randomPickedMatches[matchIndex].monsterskilled;
+
+                                    for (var turn of turns) {
+                                        var row = [];
+                                        row.push(turn.encounterid);
+                                        // Player 1
+                                        for (var card of turn.player1bestcards) {
+                                            if (card.iscardplayed) row.push(card.cardname);
+                                        }
+                                        row.push(turn.matchdataaftercard.player1.health);
+                                        row.push(turn.matchdataaftercard.player1.armor);
+                                        row.push(turn.player1changes.healthlost);
+                                        stats.player1.DmgTaken += turn.player1changes.healthlost;
+                                        row.push(turn.player1changes.armorgained);
+                                        stats.player1.ArmorGained += turn.player1changes.armorgained;
+                                        row.push(turn.player1changes.armorlost);
+                                        stats.player1.ArmorLost += turn.player1changes.armorlost;
+                                        row.push(turn.player1changes.healthgained);
+                                        stats.player1.HealingGained += turn.player1changes.healthgained;
+                                        row.push(turn.matchdataaftercard.player1.health < 1 ? false : true);
+                                        stats.player1.GameWon = turn.matchdataaftercard.player1.health < 1 ? false : true;
+                                        // Player 2
+                                        for (var card of turn.player2bestcards) {
+                                            if (card.iscardplayed) row.push(card.cardname);
+                                        }
+                                        row.push(turn.matchdataaftercard.player2.health);
+                                        row.push(turn.matchdataaftercard.player2.armor);
+                                        row.push(turn.player2changes.healthlost);
+                                        stats.player2.DmgTaken += turn.player2changes.healthlost;
+                                        row.push(turn.player2changes.armorgained);
+                                        stats.player2.ArmorGained += turn.player2changes.armorgained;
+                                        row.push(turn.player2changes.armorlost);
+                                        stats.player2.ArmorLost += turn.player2changes.armorlost;
+                                        row.push(turn.player2changes.healthgained);
+                                        stats.player2.HealingGained += turn.player2changes.healthgained;
+                                        row.push(turn.matchdataaftercard.player2.health < 1 ? false : true);
+                                        stats.player2.GameWon = turn.matchdataaftercard.player2.health < 1 ? false : true;
+                                        // Monster
+
+                                        row.push(turn.matchdataaftercard.monster == undefined ? 0 : turn.matchdataaftercard.monster.monsterhealth);
+                                        row.push(turn.matchdataaftercard.monster == undefined ? 0 : turn.matchdataaftercard.monster.monsterarmor);
+                                        row.push(turn.matchdataaftercard.monster == undefined ? "" : turn.matchdataaftercard.monster.monstername);
+                                        row.push(turn.matchdataaftercard.monster == undefined ? 0 : turn.matchdataaftercard.monster.monsterID);
+
+                                        // Deck, Hand, Discard
+                                        function addDeckStuff(row,turn,player,playerbestcards){
+                                            //before:
+                                            for (var card of turn[playerbestcards]) {
+                                                if (card.iscardplayed){
+                                                    row.push(card.matchdatabefore.player.decksize);
+                                                    row.push(card.matchdatabefore.player.handsize);
+                                                    row.push(card.matchdatabefore.player.discardsize);
+                                                    break;
+                                                }
+                                            }
+                                            //after
+                                            row.push(turn.matchdataaftercard[player].decksize);
+                                            row.push(turn.matchdataaftercard[player].handsize);
+                                            row.push(turn.matchdataaftercard[player].discardsize);
+                                        }
+                                        addDeckStuff(row,turn,"player1","player1bestcards");
+                                        addDeckStuff(row,turn,"player2","player2bestcards");
+
+
+                                        function fillCardStats(stats, cards, player) {
+                                            for (var card of cards) {
+                                                stats.cardNames[card.cardid] = card.cardname
+                                                if (card.iscardplayed == false) continue;
+                                                stats.utilityscores[card.cardid] ? stats.utilityscores[card.cardid] += card.utilityscore : stats.utilityscores[card.cardid] = card.utilityscore;
+                                                stats.cardCount[card.cardid]++;
+                                                stats.totalCardsPlayed++;
+                                                stats[player].CardsPlayedCount++;
+
+                                            }
+                                            return stats;
+                                        }
+                                        stats = fillCardStats(stats, turn.player1bestcards, "player1");
+                                        stats = fillCardStats(stats, turn.player2bestcards, "player2");
+                                        data.push(row)
+                                    }
+
+                                    for (let x = 0; x < stats.cardCount.length; x++) {
+                                        stats.cardsPct[x] = (100 * stats.cardCount[x] / stats.totalCardsPlayed).toFixed(2) + "%";
+                                        stats.utilityscores[x] = stats.utilityscores[x] / stats.cardCount[x];
+                                        //stats.cardNames[x] = x;
+                                    }
+
+                                    matchesStats.push({ stats: stats, data: data });
+
+                                    //console.log(stats)
+                                    batchUpdate.push(
+                                        {
+                                            range: "'Sample Game " + (matchIndex + 1).toString() + "'!K5",
+                                            majorDimension: "ROWS",
+                                            values: data
+                                        }
+                                    );
+                                    batchUpdate.push(
+                                        {
+                                            range: "'Sample Game " + (matchIndex + 1).toString() + "'!E4",
+                                            majorDimension: "COLUMNS",
+                                            values:
+                                                [stats.cardNames, stats.cardCount, stats.cardsPct, stats.utilityscores]
+
+                                        }
+                                    );
+                                    batchUpdate.push(
+                                        {
+                                            range: "'Sample Game " + (matchIndex + 1).toString() + "'!B4",
+                                            majorDimension: "COLUMNS",
+                                            values:
+                                                [Object.values(stats.player1), Object.values(stats.player2)]
+
+                                        }
+                                    );
+                                    /*
+                                    SHEETS.UpdateSheetCell(file.data.id, "'Sample Game " + (matchIndex + 1).toString() + "'!K4", data);
+                                    SHEETS.UpdateSheetCell(file.data.id, "'Sample Game " + (matchIndex + 1).toString() + "'!F4", [stats.cardCount, stats.cardsPct], "COLUMNS");
+                                    SHEETS.UpdateSheetCell(file.data.id, "'Sample Game " + (matchIndex + 1).toString() + "'!B4", [Object.values(stats.player1), Object.values(stats.player2)], "COLUMNS");
+                                    */
+                                }
+                                //////////////////////////////////////////////////
+                                ///// AVERAGE DATA
+                                //////////////////////////////////////////////////
+                                // TODO: Implement average of data
+
+                                var summary = {
+                                    Player1: {
+                                        wins: 0,
+                                        losses: 0
+                                    },
+                                    Player2: {
+                                        wins: 0,
+                                        losses: 0
+                                    },
+                                    CardData: [],
+                                    TurnsAvg: [],
+                                    TotalCardsPlayed: 0
+                                };
+
+                                for (let x = 0; x < 100000; x++) {
+                                    summary.CardData.push(["", 0, 0, 0.000000000000000]);
+                                }
+
+                                for (let index = 0; index < simulations.length; index++) {
+                                    const simulation = simulations[index].turns;
+                                    for (let turnIndex = 0; turnIndex < simulation.length; turnIndex++) {
+                                        const turn = simulation[turnIndex];
+                                        for (var card of turn.player1bestcards) {
+                                            summary.CardData[card.cardid][0] = card.cardname;
+                                            if (card.iscardplayed == false) continue;
+                                            summary.CardData[card.cardid][1]++;
+                                            summary.CardData[card.cardid][3] += card.utilityscore;
+                                            summary.TotalCardsPlayed++;
+                                        }
+                                        for (var card of turn.player2bestcards) {
+                                            summary.CardData[card.cardid][0] = card.cardname;
+                                            if (card.iscardplayed == false) continue;
+                                            summary.CardData[card.cardid][1]++;
+                                            summary.CardData[card.cardid][3] += card.utilityscore;
+                                            summary.TotalCardsPlayed++;
+                                        }
+                                        if (turnIndex == simulation.length - 1) {
+                                            turn.matchdataaftercard.player1.health > 0 ? summary.Player1.wins++ : summary.Player1.losses++;
+                                            turn.matchdataaftercard.player2.health > 0 ? summary.Player2.wins++ : summary.Player2.losses++;
+                                        }
+                                    }
+                                }
+
+                                console.log(matchesStats);
+                                for (let matchIndex = 0; matchIndex < matchesStats.length; matchIndex++) {
+                                    var matchStats = matchesStats[matchIndex];
+                                    // for (let cardIndex = 0; cardIndex < matchStats.stats.cardCount.length; cardIndex++) {
+                                    //     const element = matchStats.stats.cardCount[cardIndex];
+                                    //     summary.CardData[cardIndex][1] += element;
+                                    // }
+                                    // summary.TotalCardsPlayed += matchStats.stats.totalCardsPlayed;
+                                    summary.TurnsAvg[matchIndex] = [];
+                                    console.log(randomPickedMatches.length + " - " + matchIndex);
+                                    summary.TurnsAvg[matchIndex].push(randomPickedMatches[matchIndex].turns.length);
+                                    for (let x = 0; x < 6; x++) {
+                                        var my_string = "M";
+                                        summary.TurnsAvg[matchIndex].push(`='Sample Game ${matchIndex + 1}'!${String.fromCharCode(my_string.charCodeAt(0) + x)}3`);
+                                    }
+                                    for (let x = 0; x < 8; x++) {
+                                        var my_string = "T";
+                                        if (x < 7) {
+                                            summary.TurnsAvg[matchIndex].push(`='Sample Game ${matchIndex + 1}'!${String.fromCharCode(my_string.charCodeAt(0) + x)}3`);
+                                        } else {
+                                            summary.TurnsAvg[matchIndex].push(`='Sample Game ${matchIndex + 1}'!AA3`);
+                                        }
+
+                                    }
+                                }
+                                for (let cardid = 0; cardid < summary.CardData.length; cardid++) {
+                                    const element = summary.CardData[cardid];
+                                    if(element[0] != ""){
+                                        summary.CardData[cardid][2] = (100 * element[1] / summary.TotalCardsPlayed).toFixed(2) + "%";
+                                        summary.CardData[cardid][3] = element[3] / element[1];
+                                    }
+                                }
+                                console.log(summary.CardData);
+
+                                var top3 = summary.CardData.slice();
+
+                                top3.sort(function (a, b) {
+                                    if (a[1] < b[1]) { return 1; }
+                                    else if (a[1] == b[1]) { return 0; }
+                                    else { return -1; }
+                                });
+
+                                console.log(top3);
+
+                                var topCards = [[top3[0][0], "", top3[0][1]], [top3[1][0], "", top3[1][1]], [top3[2][0], "", top3[2][1]]];
+
+                                batchUpdate.push(
+                                    {
+                                        range: "'Data Summary'!C4",
+                                        majorDimension: "ROWS",
+                                        values: [Object.values(summary.Player1), Object.values(summary.Player2)]
+                                    }
+                                );
+
+                                var batch = [];
+                                for(let data of summary.CardData){
+                                    if(data[0] != ""){
+                                        batch.push(data) 
+                                    }
+                                }
+                                batchUpdate.push(
+                                    {
+                                        range: "'Data Summary'!F4",
+                                        majorDimension: "ROWS",
+                                        values: batch
+                                    }
+                                );
+
+                                batchUpdate.push(
+                                    {
+                                        range: "'Data Summary'!L4",
+                                        majorDimension: "ROWS",
+                                        values: summary.TurnsAvg
+                                    }
+                                );
+
+                                batchUpdate.push(
+                                    {
+                                        range: "'Data Summary'!C29",
+                                        majorDimension: "ROWS",
+                                        values: topCards
+                                    }
+                                );
+
+                                SHEETS.BatchUpdate(file.data.id, batchUpdate);
+                                console.log("DONE");
+                                THEHUB.NotifSuccess("DONE", "Done Update the Excel Sheet")
+                            });
+                        }
+                    });
+
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

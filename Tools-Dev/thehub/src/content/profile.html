@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The HUB</title>
+    <!-- bootsrap css include-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- font awesome for icons:-->
+    <link rel="stylesheet" href="../css/fontawesome.css">
+    <link rel="stylesheet" href="../css/notification.css">
+
+    <style>
+        html,
+        body {
+            height: 95%;
+        }
+
+        .titlebar {
+            -webkit-user-select: none;
+            -webkit-app-region: drag;
+        }
+
+        .titlebar-button {
+            -webkit-app-region: no-drag;
+        }
+
+        input[type='checkbox'] {
+            border: none !important;
+            display: block;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- header-->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark titlebar">
+            <a class="navbar-brand" href="#"></a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a id="back-btn" class="titlebar-button project-new nav-link  text-light" href="#"><i
+                            class="fas fa-reply"></i>
+                        Back</a>
+                </li>
+            </ul>
+            <div class="btn-group" role="group">
+                <button value="true" id="min-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-minimize text-light"></i></button>
+                <button value="true" id="max-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-maximize text-light"></i></button>
+                <button value="true" id="restore-btn" class="titlebar-button btn btn-default my-2 my-sm-0"><i
+                        class="far fa-window-restore text-primary"></i></button>
+                <button value="true" id="close-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="far fa-window-close text-warning"></i></button>
+            </div>
+        </nav>
+    </header>
+    <!-- /header-->
+    <!-- main-->
+    <main role='main' style="margin-top:64px;">
+        <div class="container-fluid">
+            <div class="jumbotron">
+                <h1 class="display-4" id="profile-name">
+                    <project></project>
+                </h1>
+                <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="config-tab-pilar" data-toggle="tab" href="#config-tab" role="tab"
+                            aria-controls="config-tab" aria-selected="true">Configurate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="simulate-game-tab-pilar" data-toggle="tab" href="#simulate-game-tab"
+                            role="tab" aria-controls="simulate-game-tab" aria-selected="false">Simulate</a>
+                    </li>
+                </ul> -->
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label for="inputUsername">Username</label>
+                                <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+                            </div>
+                            <div class="form-group col-md-7">
+                                <label for="inputEmail">Email</label>
+                                <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-auto">
+                                <a href="#" class="btn btn-primary" id="save-profile-btn">Save Profile</a>
+                            </div>
+                            <div class="col-auto">
+                                <a href="#" class="btn btn-danger" id="delete-profile-btn">Delete Profile</a>
+                            </div>
+                        </div>
+                        <p></p>
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="deckstable">Decks</label>
+                                <div class="card" id="deckstable">
+                                    <div class="card-body">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">id</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="decks-table">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--/main-->
+    <div class="modal" tabindex="-1" role="dialog" id="delete-profile">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger profile-delete-confirm" data-dismiss="modal"
+                        profileid=""><i class="fas fa-trash-alt"></i> Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="delete-deck">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Deck</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger deck-delete-confirm" data-dismiss="modal" deckid=""><i
+                            class="fas fa-trash-alt"></i> Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- bootsrap & jQuery includes:-->
+    <!-- electron compatible:-->
+    <script>
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
+    <!-- /electron compatible-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.min.js"></script>
+    <script src="../js/notification.js"></script>
+    <!-- electron compatible:-->
+    <script>if (window.module) module = window.module;</script>
+    <script>
+
+        const fs = require('fs');
+        const p = require('path');
+        const rendering = require("../js/redering.js");
+        const projectView = require("../js/project_view.js");
+        const G = require("../js/google-utils.js");
+        const THEHUB = require("../js/thehub.js");
+        const config = require("../js/config.js");
+        const webservices = require("../js/webservices");
+        const remote = require('electron').remote;
+        const Store = require("electron-store");
+        var SQL = webservices.Webservice();
+
+        THEHUB.ParseAppArguments(
+            {
+                arguemnt: "--dev-mode", callback: () => {
+                    $("#build-li").html("");
+                }
+            }
+        );
+
+        THEHUB.LoadProjectFromCookies();
+
+        THEHUB.OnCookiesLoaded((project) => {
+            THEHUB.ValidateProjectAndLoad();
+        });
+
+        THEHUB.OnProjectValidationError((err, project) => {
+            $("#project-header-name").text("Project: " + project.name);
+            $("main").html("<div class='container'><div class='alert alert-danger'><i class='fas fa-exclamation-triangle'></i> <strong>Oops...</strong> " + err + " <br><br><a  class='back-btn btn btn-secondary text-light' href='project_chooser.html'><i class='fas fa-reply'></i> Back</a></div></div>");
+        });
+
+
+        THEHUB.OnProjectValidated((project) => {
+            //main function
+            MainFunctions(project);
+
+        });
+        document.onreadystatechange = () => {
+            if (document.readyState == "complete") {
+                rendering.handleWindowControls();
+            }
+        }
+
+        function AddDeck() {
+            let store = new Store();
+            var id = store.get("profileID");
+            if ($("#deck-name").val() != "") {
+                SQL.InsertDeck($("#deck-name").val(), id, (something) => {
+                    $("#deck-name").val("");
+                    LoadDecks(id);
+                }, () => { console.log("ERROR") });
+            }
+        }
+
+        function DeleteDeck(id) {
+            console.log(id);
+            $(".deck-delete-confirm").attr("deckid", id);
+            $("#delete-deck").modal("show");
+        }
+
+        function LoadDecks(id) {
+            $("#decks-table").html("");
+            var html = "";
+            SQL.GetDecks({ profileId: id }, (something) => {
+                if (something.id != undefined) {
+                    html += `
+                        <tr class="user">
+                            <th scope="row">${something.id}</th>
+                            <td>${something.name}</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <button type="button" onClick="DeleteDeck(${something.id})" class="delete-deck btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                </div>
+                            </td>
+                        </tr>`;
+                }
+                $("#decks-table").html(html + `<tr>
+                                                    <th scope="col"></th>
+                                                    <th scope="col"><input id="deck-name" type="text" class="form-control"
+                                                            placeholder="Name">
+                                                    </th>
+                                                    <th scope="col"><a href="#" class="btn btn-light" onClick="AddDeck()">Add
+                                                            Deck</a></th>
+                                                </tr>`);
+
+            }, () => { console.log("ERROR") });
+        }
+
+        function MainFunctions(param) {
+            $("#back-btn").on("click", function () {
+                console.log("GO BACK!");
+                let window = remote.getCurrentWindow();
+                window.loadFile('src/content/profiles_editor.html');
+            });
+
+            let store = new Store();
+            var id = store.get("profileID");
+            console.log(id);
+
+            SQL.GetProfiles(id, (something) => {
+                console.log(something);
+                $("#profile-name").html(something.username + "'s profile");
+                $("#inputUsername").val(something.username);
+                $("#inputEmail").val(something.email);
+            }, () => { console.log("ERROR") });
+
+            LoadDecks(id);
+
+            //LoadUsers();
+
+            $("#add-user").on("click", function () {
+                $("#add-user-modal").modal("show");
+            });
+
+            $("#add-user-btn").on("click", function () {
+                SQL.InsertProfile($("#add-username").val(), $("#add-password").val(), $("#add-email").val(), () => {
+                    LoadUsers();
+                }, () => { console.log("ERROR") });
+                $("#add-user-modal").modal("hide");
+                $("#add-username").val("");
+                $("#add-password").val("");
+                $("#add-email").val("")
+            });
+
+            $("#save-profile-btn").on("click", () => {
+                console.log("Save Profile - TO DO!");
+                var query = {
+                    table: "profiles",
+                    changes: [
+                        {name: "username", value: $("#inputUsername").val()},
+                        {name: "email", value: $("#inputEmail").val()}
+                    ],
+                    where: `id = '${id}'`
+                };
+                SQL.Update(query, (result) => { 
+                    console.log("Updated");
+                    THEHUB.NotifSuccess("Profile Saved", "Profile saved successfully!"); 
+                }, () => { console.log("ERROR") }, "update-profile");
+            });
+
+            $("#delete-profile-btn").on("click", () => {
+                $("#delete-profile").modal("show");
+            });
+
+            $(".deck-delete-confirm").on("click", () => {
+                var deckid = $(".deck-delete-confirm").attr("deckid");
+                console.log(deckid);
+                SQL.Delete("decks", [{ name: "id", value: deckid }], () => {
+                    $("#delete-deck").modal("hide");
+                    LoadDecks(id);
+                });
+            });
+
+            $(".profile-delete-confirm").on("click", () => {
+                SQL.Delete("profiles", [{ name: "id", value: id }], () => {
+                    let window = remote.getCurrentWindow();
+                    window.loadFile('src/content/profiles_editor.html');
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)DatabaseAPI\include;$(SolutionDir)TBSGFramework\include;$(SolutionDir)external\ptl\include;$(SolutionDir)NetworkLib\include;$(SolutionDir)external\Enet\include;$(SolutionDir)external\mariadb\include;$(SolutionDir)external\mariadb\include\mysql;$(SolutionDir)external\basiclogger\include;$(SolutionDir)external\basiclogger\external\fmt\include;$(SolutionDir)external\rapidjson\include;$(SolutionDir)external\openssl-1.1.1b\include;$(SolutionDir)external\FlatValueMap\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)build\DatabaseAPI\$(Platform)\$(Configuration)\bin;$(SolutionDir)build\BasicLogger\$(Platform)\$(Configuration)\bin;$(SolutionDir)external\mariadb\lib;$(SolutionDir)build\NetworkLib\$(Platform)\$(Configuration)\bin;$(SolutionDir)build\TBSGFramework\$(Platform)\$(Configuration)\bin;$(SolutionDir)build\ptl\$(Platform)\$(Configuration)\bin;$(SolutionDir)external\openssl-1.1.1b\lib;$(SolutionDir)build\Enet\$(Platform)\$(Configuration)\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CRYPT32.lib;libcrypto.lib;libssl.lib;NetworkLib.lib;TBSGFramework.lib;ptl.lib;libmariadb.lib;mariadbclient.lib;mysqlservices.lib;mariadbclientpp-$(Configuration).lib;BasicLogger.lib;Enet.lib;DatabaseAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

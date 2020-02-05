@@ -1,0 +1,20 @@
+{
+    "last": "",
+    "projects": [
+        {
+            "name": "Froggy",
+            "realname": "froggy",
+            "desc": "Card Game",
+            "path": "D:/Projects/TBSG/Y2018D-Y2-DigitalDeckbuilder/Projects/Froggy",
+            "google": {
+                "drive": "0ANJk-MLInPYEUk9PVA",
+                "teamdrive": true,
+                "file": "1PCBVlKxp-epkLbXPqRivm7i_NIK75B0SyAjKVVZtRs0",
+                "meta": {
+                    "drive": "Y2018C-Y2-PR-TBSG",
+                    "file": "cards"
+                }
+            }
+        }
+    ]
+}

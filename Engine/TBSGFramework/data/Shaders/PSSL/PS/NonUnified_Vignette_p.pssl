@@ -1,0 +1,25 @@
+﻿// DeferredFinal_p.pssl
+#include "VignetteShaderBuffers.h"
+
+SamplerState samp0 : register(s0);
+Texture2D backBufferTexture : register(t0);
+Texture2D vignetteTexture : register(t1);
+
+float4 main(VS_OUTPUT Input) : S_TARGET_OUTPUT
+{
+	return float4(1, 0, 0, 1);
+	//float2 pixel;
+	//pixel.x = Input.Position.x;
+	//pixel.y = Input.Position.y;
+	
+	// convert the pixel coordiate to a value from 0 to one
+	// then moving the coordinates so that 0,0 becomes the center
+	//const float2 position = (pixel.xy / screenSize) - float2(0.5,0.5);
+	// get the distance from the center
+	//const float dist = length(position);
+	// calculate the value for the vignette effect using smoothstep
+	//float vignette = smoothstep(vignetteRadius, vignetteRadius - vignetteSoftness,dist);
+	//const float3 vignetteColor = float3(0.0, 0.0, 0.0);
+	//return float4(backBufferTexture[(uint2)pixel].xyz vignetteColor, 1.0-vignette);
+}
+

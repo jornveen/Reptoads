@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The HUB</title>
+    <!-- bootsrap css include-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- font awesome for icons:-->
+    <link rel="stylesheet" href="../css/fontawesome.css">
+    <!-- the hubs style sheet-->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/notification.css">
+</head>
+
+<body>
+    <!-- header-->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark titlebar">
+            <a class="navbar-brand" href="#"></a>
+            <ul class="navbar-nav mr-auto btn-group">
+                <li class="nav-item ">
+                    <a class="back-btn titlebar-button nav-link text-light" href="project_chooser.html"><i
+                            class="fas fa-chevron-left"></i></a>
+                </li>
+                <li class="nav-item ">
+                    <a id="config-btn" class="config-btn disable-when-update titlebar-button nav-link text-light"
+                        href="#"><i class="fas fa-cog"></i>
+                        Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a id="code-btn" class="titlebar-button disable-when-update nav-link text-light" href="#"><i
+                            class="fas fa-code"></i>
+                        Code</a>
+                </li>
+                <li class="nav-item">
+                    <a id="ui-btn" class="titlebar-button disable-when-update nav-link  text-light" href="#"><i
+                            class="fas fa-edit"></i> UI
+                        Editor</a>
+                </li>
+                <li class="nav-item">
+                    <a id="play-btn" class="titlebar-button disable-when-update nav-link  text-light" href="#"><i
+                            class="fas fa-play"></i>
+                        Play</a>
+                </li>
+                <li class="nav-item disable-when-update">
+                    <a class="titlebar-button nav-link  text-light" href="#" id="google-session"><i
+                            class="fas fa-exclamation-triangle text-danger" id="google-status"></i> Google Account:
+                        <span id="user-name" class="text-danger">Disconnected</span></a>
+                    <a id="renew-session-btn"
+                        class="titlebar-button btn btn-danger project-new nav-link d-none text-light" href="#"><i
+                            class="fas fa-user"></i>
+                        Renew Session with Google</a>
+                </li>
+            </ul>
+            <span class="navbar-text justify-content-center text-info d-flex" id="project-header-name"></span>
+            <div class="btn-group" role="group">
+                <button value="true" id="min-btn" class="titlebar-button btn  btn-outline-default my-2 my-sm-0"><i
+                        class="fas fa-window-minimize text-light"></i></button>
+                <button value="true" id="max-btn" class="titlebar-button btn  btn-outline-default my-2 my-sm-0"><i
+                        class="fas fa-window-maximize text-light"></i></button>
+                <button value="true" id="restore-btn" class="titlebar-button btn btn-outline-default my-2 my-sm-0"><i
+                        class="far fa-window-restore text-primary"></i></button>
+                <button value="true" id="close-btn" class="titlebar-button btn btn-outline-default my-2 my-sm-0"><i
+                        class="far fa-window-close text-warning"></i></button>
+
+            </div>
+        </nav>
+    </header>
+    <!-- /header-->
+    <!-- main-->
+    <main role='main' class="">
+        <div id="loader-latest"></div>
+        <div class="container-fluid" id="project_viewer">
+            <div class="row justify-content-center">
+                <div class="col-8 hidden-md-down" id="test">
+                    <div class="jumbotron">
+                        <h1 class="display-4">Project <project></project>
+                        </h1>
+                        <p class="lead">What do you want to do?</p>
+                        <hr class="my-4">
+                        <!-- get latest -->
+                        <div class="btn-group" role="group">
+                            <div class="btn-group" role="group">
+                                <button id="" type="button" class="btn btn-secondary dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-sync-alt"></i> Check for Updates
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item getlatest" data-type="client" href="#"><i
+                                            class="fas fa-gamepad"></i> Client</a>
+                                    <a class="dropdown-item getlatest" data-type="server" href="#"><i
+                                            class="fas fa-server"></i> Server</a>
+                                    <a class="dropdown-item getlatest" data-type="config" href="#"><i
+                                            class="fas fa-cog"></i> Config</a>
+                                    <a class="dropdown-item getlatest" data-type="scripts" href="#"><i
+                                            class="far fa-file-code"></i> Scripts</a>
+                                </div>
+                            </div>
+                            <a class="btn btn-primary btn-lg open-project-folder" href="#" role="button"><i
+                                    class="fas fa-external-link-square-alt"></i> Open Asset folder</a>
+                            <a class="btn btn-dark btn-lg config-btn" href="#" role="button"><i class="fas fa-cog"></i>
+                                Settings</a>
+                            <a href="#" class="btn btn-darkgreen btn-lg validate-scripts"><i
+                                    class="far fa-check-square"></i> Validate all Scripts</a>
+                            <a href="#" class="btn btn-light btn-lg edit-users"><i class="fas fa-user-friends"></i> Edit
+                                Users</a>
+                        </div>
+                        <div class="btn-group" role="group" style="margin-top:8px">
+                            <a class="btn btn-light btn-lg edit-google-cards-btn" href="#" role="button"><i
+                                    class="fas fa-database"></i> Edit Card Data</a>
+                            <a class="btn btn-success btn-lg ai-btn" href="#" role="button"><i class="fas fa-robot"></i>
+                                Configure the AI</a>
+                            <a class="btn btn-info btn-lg" href="#" role="button"><i class="fas fa-layer-group"></i>
+                                Edit
+                                Maps</a>
+                            <a class="btn btn-dark btn-lg" id="sync" href="#" role="button"><i
+                                    class="fas fa-upload"></i> Sync</a>
+                            <a class="btn btn-warning btn-lg" id="preview" data-toggle="modal"
+                                data-target="#preview-modal" href="#" role="button"><i class="fas fa-search"></i> Model
+                                Preview</a>
+                                <a class="btn btn-primary btn-lg" id="edit-decks" href="#" role="button"><i class="fas fa-plus"></i> Edit Decks</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            Output <p class="float-right">Status: <span class="badge badge-success"
+                                    id="execution-status">Success</span></p>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <textarea class="form-control" id="textOutputArea" rows="16" style="font-size: 15px;"
+                                    readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Project structure
+                        </div>
+                        <div class="card-body">
+                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <button type="button" class="btn btn-primary" id="Insepct-Home"><i
+                                        class="fas fa-home"></i> Home</button>
+                                <div class="btn-group" role="group"></div>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Quick Go
+                                    </button>
+                                    <div class="dropdown-menu" id='Inspector-Fav'>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush" id="InspectrList">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+    <!--/main-->
+    <!-- modals-->
+    <div class="modal" tabindex="-1" role="dialog" id="open-script-option-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Script Options</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>What do you want to do with this script</p>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                            class="far fa-check-square"></i> Validate</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i
+                            class="fas fa-external-link-square-alt"></i> Open Folder</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal"><i
+                            class="far fa-folder-open"></i> Open file</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="far fa-window-close"></i>
+                        Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="open-project-configs-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="confignav" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="game-config-tab" data-toggle="tab" href="#game-config"
+                                role="tab" aria-controls="game-config" aria-selected="true">Game Config</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="project-config-tab" data-toggle="tab" href="#project-config"
+                                role="tab" aria-controls="project-config" aria-selected="true">Project Config</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="configtabs">
+                        <div class="tab-pane fade show active" id="game-config" role="tabpanel"
+                            aria-labelledby="game-config-tab">
+                            <!-- game configs:-->
+
+                            <div class="editors"><label for="config-editor-server" style="width:100%">Server</label>
+                                <div id="config-editor-server"></div>
+                            </div>
+                            <div class="editors"><label for="config-editor-client" style="width:100%">Client</label>
+                                <div id="config-editor-client"></div>
+                            </div>
+                            <div id="titlebar">
+                                <button type="button" class="btn btn-primary" id="save-config-btn"><i
+                                        class="fas fa-check"></i> Save</button>
+                            </div>
+                            <!--/game configs-->
+                        </div>
+                        <div class="tab-pane fade" id="project-config" style="padding-top:15px;" role="tabpanel"
+                            aria-labelledby="project-config-tab">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end tabs-->
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- model previewer -->
+    <div class="modal" tabindex="-1" role="dialog" id="preview-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select a Model</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group" id="model-list-previewer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modals-->
+
+    <!-- bootsrap & jQuery includes:-->
+    <!-- electron compatible:-->
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }
+    </script>
+    <!-- /electron compatible-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- electron compatible:-->
+    <script>if (window.module) module = window.module;</script>
+    <!-- /electron compatible-->
+    <!-- electron rendering process inclde-->
+    <script>
+        const rendering = require("../js/redering.js");
+        const scene_editor = require("../js/scene_editor.js");
+        const projectView = require("../js/project_view.js");
+        const projectInspect = require("../js/project_inspector.js");
+        const THEHUB = require("../js/thehub.js");
+        const Sheets = require("../js/google-sheets.js");
+        const g = require("../js/google-utils.js");
+        const updater = require("../js/app-updater.js").Updater();
+
+        THEHUB.ParseAppArguments(
+            {
+                arguemnt: "--dev-mode", callback: () => {
+                }
+            }
+        );
+
+        THEHUB.LoadProjectFromCookies();
+
+        THEHUB.OnCookiesLoaded((project) => {
+            THEHUB.ValidateProjectAndLoad();
+        });
+
+        THEHUB.OnProjectValidationError((err, project) => {
+            $("#project-header-name").text("Project: " + project.name);
+            $("main").html("<div class='container'><div class='alert alert-danger'><i class='fas fa-exclamation-triangle'></i> <strong>Oops...</strong> " + err + " <br><br><a  class='back-btn btn btn-secondary text-light' href='project_chooser.html'><i class='fas fa-reply'></i> Back</a></div></div>");
+        });
+
+        THEHUB.OnProjectValidated((project) => {
+
+            g.googleSignIn(function (user) {
+                $("#user-name").text(user.displayName);
+                $("#user-name").removeClass("text-danger");
+                $("#google-status").removeClass("fa-exclamation-triangle");
+                $("#google-status").addClass("fa-check-circle");
+                $("#google-status").removeClass("text-danger");
+                $("#google-status").addClass("text-success");
+                g.CheckIfTokenIsExpired(() => {
+                    $("#google-session").addClass("d-none");
+                    $("#renew-session-btn").removeClass("d-none");
+                    console.log("expired");
+                    THEHUB.NotifFail("Google", "Your Google session has expired!");
+                });
+            });
+
+
+
+
+
+
+
+            $("#renew-session-btn").click(() => {
+                location.reload();
+            })
+            function createFavButtons(data, element, extra, path) {
+                $.each(data, function (key, value) {
+                    if (projectInspect.PathExists(path + "/" + value) && value != "") {
+                        element.append('<a class="dropdown-item file-inspector-item" data-root="' + extra + ',' + value + '" data-path="' + path + "/" + value + '" href="#"> ' + extra + ': ' + key + '</a> ');
+                    }
+                })
+            }
+            function makeFavs(object, favs) {
+                $("#Inspector-Fav").html("");
+                var project = THEHUB.GetCurrentProject();
+                var configs = [project.clientConfig, project.serverConfig];
+                createFavButtons(configs[0].assets, $("#Inspector-Fav"), "Client", project.path + "/Client")
+                createFavButtons(configs[1].assets, $("#Inspector-Fav"), "Server", project.path + "/Server")
+                $("#Inspector-Fav .file-inspector-item").click(function () {
+                    projectInspect.Jump($(this).attr('data-path'), $(this).attr('data-root'))
+                })
+                $('#Insepct-Home').click(() => {
+                    projectInspect.UpInspect("");
+                })
+            }
+
+
+
+            function update(type) {
+                updater.GetLatest(
+                    type,
+                    () => {
+                        THEHUB.NotifSuccess("Success", "Updated the " + THEHUB.toTitleCase(type) + " Application");
+                        $("#project_viewer").removeClass("d-none");
+                        $(".disable-when-update").removeClass("d-none");
+                        $("#loader-latest").html("");
+                    },
+                    () => {
+                        THEHUB.NotifInfo("No Update needed", "Your " + THEHUB.toTitleCase(type) + " Version is up to date.");
+                        $("#project_viewer").removeClass("d-none");
+                        $(".disable-when-update").removeClass("d-none");
+                        $("#loader-latest").html("");
+                    }, () => {
+                        THEHUB.NotifFail("Error", "Roses are red .... #BUG");
+                        $("#project_viewer").removeClass("d-none");
+                        $(".disable-when-update").removeClass("d-none");
+                        $("#loader-latest").html("");
+                    }
+                )
+            }
+            $(".getlatest").click(function () {
+                $(".disable-when-update").addClass("d-none");
+                var type = $(this).attr("data-type");
+                $("#project_viewer").addClass("d-none");
+                THEHUB.Spinner(document.getElementById("loader-latest"));
+                $("#loader-latest").append("<p class='text-info text-center'>Please Wait...</p>");
+                update(type);
+            });
+
+            $("#project-header-name").text("Project: " + project.name);
+            $("project").text(project.name);
+            projectInspect.SetRoot(project.path);
+            projectInspect.UpInspect("");
+            projectInspect.LoadModels(THEHUB.GetCurrentProject(), (err, files) => {
+                if (err) throw err;
+                $("#model-list-previewer").html("")
+                files.forEach(file => {
+                    if (file.name.includes(".glb"))
+                        $("#model-list-previewer").append('<a href="#" data-dismiss="modal" class="list-group-item list-group-item-action" data-name="' + file.name + '">' + file.name + '</a>');
+                })
+            })
+            $("#model-list-previewer").on("click", "a", function () {
+                projectView.openPreview($(this).attr("data-name"));
+            })
+            makeFavs(null, null);
+            projectView.openEditor(project.path);
+            $(".back-btn").click(function () {
+                document.querySelector("main").innerHTML = "";
+                THEHUB.Spinner(document.querySelector("main"));
+            });
+            $(".blender-btn").click(function () {
+                scene_editor.OpenSceneEditor(__dirname + "/../" + project.path);
+            });
+            $("#code-btn").click(function () {
+                THEHUB.OpenExternalProgram("code", __dirname + "/../" + project.path);
+            });
+
+            function LoadFiles(id) {
+                g.GetFilesFromTeamDrive(id, (files) => {
+                    $("#drive-files").empty();
+                    if (files.length > 0) {
+                        files.forEach((f, k) => {
+                            const regex = /Card|cards|card|Cards/g;
+                            var found = f.name.match(regex);
+                            if (found)
+                                $("#drive-files").append('<a class="dropdown-item drive-file-id" href="#" data-id="' + f.id + '">' + f.name + '</a>');
+                        });
+                    }
+                    $("#teamdrive-update-status").text("Done");
+                    $(".drive-file-id").click(function () {
+                        $("#file-data").val($(this).text());
+                        $("#file-data").attr("data-id", $(this).attr("data-id"));
+                        $("#save-project").removeClass("disabled");
+                        $("#save-project").removeAttr("disabled");
+                    });
+                });
+            }
+
+
+
+            $(".config-btn").click(function () {
+                //projectView.openEditor(project.path);
+                $(".disable-when-update").addClass("d-none");
+                $("#project_viewer").addClass("d-none");
+                THEHUB.Spinner(document.getElementById("loader-latest"));
+                $("#loader-latest").append("<p class='text-info text-center'>Please wait till we have fetched all important data from Google...</p>");
+
+                $("#project-config").empty();
+                projectView.DisplayProjectConfig(project.path, document.getElementById("project-config"));
+                $("#teamdrives").empty();
+                g.GetTeamDrives(function (res) {
+                    res.data.items.forEach((v, k) => {
+                        $("#teamdrives").append('<a class="dropdown-item teamdrive-id" href="#" data-id="' + v.id + '">' + v.name + '</a>');
+                    });
+                    $(".teamdrive-id").click(function () {
+                        $("#file-data").val("");
+                        $("#drive-data").val($(this).text());
+                        $("#drive-data").attr("data-id", $(this).attr("data-id"));
+                        $("#teamdrive-update-status").text("Fetching files...");
+                        LoadFiles($(this).attr("data-id"));
+                    });
+                    if ($("#drive-data").val() != undefined) {
+                        if ($("#drive-data").val().replace(" ", "").length != 0) {
+                            LoadFiles($("#drive-data").attr("data-id"));
+                        }
+                    }
+                    //<button type="button" class="btn btn-primary" id="save-config-btn"><i class="fas fa-check"></i> Save</button>
+                    var savebtn = document.createElement("button")
+                    savebtn.classList.add("btn");
+                    savebtn.classList.add("btn-primary");
+                    savebtn.setAttribute("id", "save-project-config-btn");
+                    savebtn.innerHTML = '<i class="fas fa-check"></i> Save';
+                    document.getElementById("project-config").appendChild(savebtn);
+                    $("#open-project-configs-modal").modal("show");
+                });
+                $("#project-config").off('click', '#save-project-config-btn');
+                $("#project-config").on('click', '#save-project-config-btn', function () {
+                    var meta = { drive: $("#drive-data").val(), file: $("#file-data").val() };
+                    var name = $("#name-data").val();
+                    var realname = $("#realname-data").val();
+                    var desc = $("#desc-data").val();
+                    var path = $("#path-data").val();
+                    var drive = $("#drive-data").attr("data-id");
+                    var teamdrive = $("#teamdrive-data").val();
+                    var file = $("#file-data").attr("data-id");
+                    var check = true;
+                    if (name.replace(" ", "").length == 0) {
+                        THEHUB.NotifFail("Error", "Name field cannot be empty");
+                        $("#name-data").addClass(" bg-danger text-white");
+                        check = false;
+                    }
+                    if (drive.replace(" ", "").length == 0) {
+                        THEHUB.NotifFail("Error", "Drive field cannot be empty");
+                        $("#drive-data").addClass(" bg-danger text-white");
+                        check = false;
+                    }
+                    if (file.replace(" ", "").length == 0) {
+                        THEHUB.NotifFail("Error", "File field cannot be empty");
+                        $("#file-data").addClass(" bg-danger text-white");
+                        check = false;
+                    }
+                    if (check == true) {
+                        $("#open-project-configs-modal").modal("hide");
+                        projectView.SaveProjectConfig({
+                            name: name,
+                            realname: realname,
+                            desc: desc,
+                            path: path,
+                            drive: drive,
+                            file: file
+                        });
+                        THEHUB.NotifSuccess("Saved", "Project file was saved!");
+                        //THEHUB.WriteObjectToFile()
+                    }
+                    //
+                });
+            });
+
+            $("#open-project-configs-modal").on("hide.bs.modal", function () {
+                $("#project_viewer").removeClass("d-none");
+                $(".disable-when-update").removeClass("d-none");
+                $("#loader-latest").html("");
+            })
+
+            $("#save-config-btn").click(function () {
+                $("#open-project-configs-modal").modal("hide");
+                //projectView.closeEditor();
+            });
+            $("#InspectrList").on("click", ".open-script-li", function () {
+                $("#open-script-option-modal").modal("show");
+            });
+            $("#InspectrList").on("click", ".open-folder", function () {
+                var path = $(this).attr("data-path");
+                THEHUB.OpenExternalProgram("explorer", path);
+            });
+            $("#InspectrList").on("click", ".open-file", function () {
+                var path = $(this).attr("data-path");
+                if (path.includes(".glb")) {
+                    scene_editor.OpenSceneEditor(__dirname + "/../" + project.path, path);
+                } else {
+                    THEHUB.OpenExternalProgram("code", path);
+                }
+            });
+            $("#InspectrList").on("click", ".validate-script", function () {
+                var path = $(this).attr("data-path");
+                THEHUB.RunLuaCheck(path, 1);
+            });
+            $(".open-project-folder").on("click", function () {
+                THEHUB.OpenExternalProgram("explorer", project.path);
+            });
+
+            $("#InspectrList").on("click", ".file-inspector-item p", function () {
+                var path = $(this).attr("data-path");
+                if (path !== undefined) {
+                    var type = $(this).attr("data-type");
+                    if (type === undefined)
+                        projectInspect.UpInspect(path);
+                    else
+                        projectInspect.DownInspect(path);
+                } else {
+                    var file = $(this).attr("data-file");
+                    console.log(projectInspect.GetPathTo(file));
+                }
+            });
+            $(".validate-scripts").on("click", function () {
+                THEHUB.RunLuaCheck();
+            });
+            $(".edit-users").on("click", function () {
+                projectView.openProfilesEditor();
+            });
+            $("#edit-decks").on("click", function () {
+                projectView.openDeckEditor();
+            });
+            
+            $(".ai-btn").on("click", function () {
+                projectView.openAIEditor();
+            });
+
+            $("#ui-btn").on("click", function () {
+                projectView.openUIEditor();
+            });
+            $("#sync").on("click", function () {
+                document.querySelector("#loader-latest").innerHTML = ''
+                THEHUB.Spinner(document.querySelector("#loader-latest"));
+                $('#project_viewer').addClass('d-none');
+                updater.Sync();
+            })
+            $(".btn-info").on("click", function () {
+                projectView.openMapChooser();
+            });
+
+            $(".edit-cards-btn").on("click", function () {
+                THEHUB.OpenExternalProgram("excel", project.path + "/Server/data/cards.xml");
+            });
+
+            $(".edit-google-cards-btn").on("click", function () {
+                Sheets.Open(() => {
+                    update("scripts");
+                });
+            });
+            $("#play-btn").on("click", function () {
+                projectView.StartGame(project, () => {
+                    THEHUB.NotifFail("Error", "Could not unpack Assetst please get latest from Server!");
+                });
+            });
+            document.addEventListener('updated-card-revision', () => {
+                THEHUB.NotifSuccess("Updated Scripts", "Updated Scripts");
+                document.querySelector("#loader-latest").innerHTML = ''
+                $('#project_viewer').removeClass('d-none');
+            })
+            document.addEventListener('update-config', () => {
+                THEHUB.NotifSuccess("Updated", "Updated Config");
+                document.querySelector("#loader-latest").innerHTML = ''
+                $('#project_viewer').removeClass('d-none');
+            })
+            document.addEventListener("hub-sync-done", () => {
+                document.querySelector("#loader-latest").innerHTML = ''
+                $('#project_viewer').removeClass('d-none');
+            })
+        });
+
+        document.onreadystatechange = () => {
+            if (document.readyState == "complete") {
+                rendering.handleWindowControls();
+            }
+        }
+    </script>
+</body>
+
+</html>

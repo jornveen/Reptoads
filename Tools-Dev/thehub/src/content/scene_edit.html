@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The HUB</title>
+    <!-- bootsrap css include-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- font awesome for icons:-->
+    <link rel="stylesheet" href="../css/fontawesome.css">
+
+    <style>
+ html,body {
+  height: 95%;
+  background:#111;
+}
+.titlebar {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+
+.titlebar-button {
+    -webkit-app-region: no-drag;
+}
+    </style>
+
+</head>
+
+<body>
+    <!-- header-->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark titlebar">
+            <a class="navbar-brand" href="#"></a>
+            <ul class="navbar-nav mr-auto">
+
+            </ul>
+            <div class="btn-group" role="group">
+                <button value="true" id="min-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-minimize text-light"></i></button>
+                <button value="true" id="max-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-maximize text-light"></i></button>
+                <button value="true" id="restore-btn" class="titlebar-button btn btn-default my-2 my-sm-0"><i
+                        class="far fa-window-restore text-primary"></i></button>
+                <button value="true" id="close-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="far fa-window-close text-warning"></i></button>
+            </div>
+        </nav>
+    </header>
+    <!-- /header-->
+    <!-- main-->
+    <main role='main' class=" h-100" style="margin-top:64px;">
+            <webview  class="h-100" nodeintegration id='webview'></webview>
+    </main>
+    <!--/main-->
+ 
+    <!-- bootsrap & jQuery includes:-->
+    <!-- electron compatible:-->
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+    <!-- /electron compatible-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.min.js"></script>
+    <!-- electron compatible:-->
+    <script>if (window.module) module = window.module;</script>
+    <script>
+        const rendering = require("../js/redering.js");
+        const projectView = require("../js/project_view.js");
+        const uieditor = require("../js/ui_editor.js");
+
+        const THEHUB = require("../js/thehub.js");
+        THEHUB.ParseAppArguments(
+            {arguemnt:"--dev-mode",callback:()=>{
+                $("#build-li").html("");
+                }
+            }
+        );
+        
+        THEHUB.LoadProjectFromCookies();
+        
+        THEHUB.OnCookiesLoaded((project)=>{
+            THEHUB.ValidateProjectAndLoad();
+        });
+        
+        THEHUB.OnProjectValidationError((err,project)=>{
+            $("#project-header-name").text("Project: " + project.name);
+            $("main").html("<div class='container'><div class='alert alert-danger'><i class='fas fa-exclamation-triangle'></i> <strong>Oops...</strong> "+err+" <br><br><a  class='back-btn btn btn-secondary text-light' href='project_chooser.html'><i class='fas fa-reply'></i> Back</a></div></div>");
+        });
+
+
+        THEHUB.OnProjectValidated((project)=>{
+            MainFunctions();
+        });
+        document.onreadystatechange = () => {
+            if (document.readyState == "complete") {
+                rendering.handleWindowControls();
+            }
+        }
+
+
+        function MainFunctions(p) {
+            var url = new URL(location);
+            var project_folder = url.searchParams.get("project");
+            var scene = url.searchParams.get("file");
+            //file://${__dirname}/../threejs/editor/index.html?project=${project}#file==${scene}
+            var webview = document.querySelector("webview");
+            webview.src = `file://${__dirname}/../threejs/editor/index.html?project=${project_folder}#file==${scene}`;
+            webview.addEventListener('dom-ready', () => {
+            webview.openDevTools()
+            })
+        }
+    </script>
+</body>
+
+</html>

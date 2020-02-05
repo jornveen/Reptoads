@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The HUB</title>
+    <!-- bootsrap css include-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- font awesome for icons:-->
+    <link rel="stylesheet" href="../css/fontawesome.css">
+    <link rel="stylesheet" href="../css/uieditor.css">    
+    <link rel="stylesheet" href="../css/notification.css">
+</head>
+
+<body>
+    <!-- header-->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark titlebar">
+            <a class="navbar-brand" href="#"></a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a id="back-btn" class="titlebar-button project-new nav-link  text-light" href="#"><i
+                            class="fas fa-reply"></i>
+                        Back</a>
+                </li>
+                <li class="nav-item ">
+                    <a id="open-btn" class="titlebar-button new-ui-btn nav-link  text-light" href="#"><i
+                            class="fas fa-plus"></i> New UI</a>
+                </li>
+                <li class="nav-item ">
+                    <a id="open-btn" class="titlebar-button open-ui-btn nav-link  text-light" href="#"><i
+                            class="far fa-folder-open"></i> Open</a>
+                </li>
+                <li class="save-item ">
+                    <a id="sync-btn" class="titlebar-button save-ui-btn nav-link  text-light" href="#"><i
+                            class="fas fa-check"></i> Save</a>
+                </li>
+                <li class="save-item ">
+                    <a class="titlebar-button nav-link  text-light " href="#" id="show-add-element">
+                        <i class="fas fa-plus"></i> Add UI Element
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a id="undo-btn" class="titlebar-button project-new nav-link  text-light" href="#"><i
+                            class="fas fa-undo"></i>
+                        Undo</a>
+                </li>
+                <li class="nav-item ">
+                    <a id="reset-btn" class="titlebar-button project-new nav-link  text-light" href="#"><i class="fas fa-snowplow"></i>
+                        Reset</a>
+                </li>
+            <li class="nav-item ">
+                <button id="preview-element-btn" type="submit" class="btn btn-primary"><i
+                    class="fas fa-search"></i>Preview</button>
+            </li>
+            </ul>
+            <div class="btn-group" role="group">
+                <button value="true" id="min-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-minimize text-light"></i></button>
+                <button value="true" id="max-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-maximize text-light"></i></button>
+                <button value="true" id="restore-btn" class="titlebar-button btn btn-default my-2 my-sm-0"><i
+                        class="far fa-window-restore text-primary"></i></button>
+                <button value="true" id="close-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="far fa-window-close text-warning"></i></button>
+                        
+            </div>
+        </nav>
+    </header>
+    <!-- /header-->
+    <!-- main-->
+    <main role='main' class="d-none">
+        <div class="row">
+            <span id="coords">x: 0 y: 0</span>
+        </div>
+        <div class="row">
+            <span id="coords-click">x: 0 y: 0</span>
+        </div>
+        <div class="row">
+            <button class="btn btn-warning lock-text" style="margin:15px;"><i class="fas fa-lock"></i> Lock Text</button>
+        </div>
+        <div class="row justify-content-center">
+            <div id="canvas-area" style="background:#ccc" class="col container hidden-md-down">
+            </div>
+            <div class="col-3">
+                    <div class="card">
+                            <div class="card-header">
+                                Scene
+                                <a class="btn btn-primary" data-toggle="collapse" href="#scene-list" role="button" aria-expanded="false" aria-controls="scene-list">
+                                        Show
+                                      </a>
+                            </div>
+                            <div id="scene-list" class="collapse">
+        
+                            </div>
+                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        Properties
+                    </div>
+                    <div id="tools-list">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--/element-->
+    <div class="modal" tabindex="-1" role="dialog" id="add-shape-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add UI Element</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-md-12">
+                        <label for="add-element-name">Name</label>
+                        <input type="text" class="form-control" id="add-element-name" placeholder="Element's Name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputState">Shape</label>
+                        <select id="add-element-shape" class="form-control">
+                            <option value="image" selected>Image</option>
+                            <option value="text">Text</option>
+                        </select>
+                    </div>
+                    <div id="extra-forms">
+                        <div class="form-group col-md-12">
+                            <label for="image-select">Image</label>
+                            <select id="image-select" class="image-select form-control">
+                            </select>
+                            <img src="" width="320" height="520" id="image-preview">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <button id="add-element-btn" type="submit" class="btn btn-primary"><i
+                                class="fas fa-plus"></i>Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/event-->
+    <div class="modal" tabindex="-1" role="dialog" id="add-event-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Event To UI Element</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-md-6">
+                        <label for="inputState">Event Type</label>
+                        <select id="add-event-type" class="form-control">
+                            <option value="OnButtonPressed" selected>OnButtonPressed</option>
+                            <option value="OnButtonReleased">OnButtonReleased</option>
+                            <option value="OnFocussed">OnFocussed</option>
+                            <option value="OnFocusLost">OnFocusLost</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputState">Action</label>
+                        <select id="add-event-action" class="form-control">
+                            <option value="0">Load UI On Top</option>
+                            <option value="1">Load UI On Bottom</option>
+                            <option value="2">Unload UI</option>
+                            <option value="3" selected>Set Image</option>
+                            <option value="4">Play Sound</option>
+                            <option value="5">Play Sound Loop</option>
+                            <option value="6">Stop Sound</option>
+                        </select>
+                    </div>
+                    <div id="events-extra-forms">
+                        <div class="form-group col-md-12">
+                            <label for="event-image-select">Image</label>
+                            <select id="event-image-select" class="image-select form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <button id="add-event-btn" type="submit" class="btn btn-primary"><i class="fas fa-plus"></i>
+                            Add</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- bootsrap & jQuery includes:-->
+    <!-- electron compatible:-->
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+    <!-- /electron compatible-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.min.js"></script>
+
+    <script src="../threejs/build/three.min.js"></script>
+    <script src="../three-ui/lib/asset-loader.min.js"></script>
+
+    <!-- electron compatible:-->
+    <script>if (window.module) module = window.module;</script>
+    <script>
+        const ThreeUI = require("../three-ui/src/three-ui/ThreeUI.js")
+        const rendering = require("../js/redering.js");
+        const projectView = require("../js/project_view.js");
+        const uieditor = require("../js/ui_editor.js");
+        const p = require('path');
+        var event = new CustomEvent('cookies-loaded', { detail: { project: null } });
+        const THEHUB = require("../js/thehub.js");
+        const { remote } = require('electron');
+        const dialog = remote.dialog;
+        THEHUB.ParseAppArguments(
+            {
+                arguemnt: "--dev-mode", callback: () => {
+                    $("#build-li").html("");
+                }
+            }
+        );
+
+        THEHUB.LoadProjectFromCookies();
+
+        THEHUB.OnCookiesLoaded((project) => {
+            THEHUB.ValidateProjectAndLoad();
+        });
+
+        THEHUB.OnProjectValidationError((err, project) => {
+            $("#project-header-name").text("Project: " + project.name);
+            $("main").html("<div class='container'><div class='alert alert-danger'><i class='fas fa-exclamation-triangle'></i> <strong>Oops...</strong> " + err + " <br><br><a  class='back-btn btn btn-secondary text-light' href='project_chooser.html'><i class='fas fa-reply'></i> Back</a></div></div>");
+        });
+
+
+        THEHUB.OnProjectValidated((project) => {
+            MainFunctions(project);
+        });
+        document.onreadystatechange = () => {
+            if (document.readyState == "complete") {
+                rendering.handleWindowControls();
+                $('main').removeClass("d-none")
+            }
+        }
+
+        function MainFunctions(project) {
+            // Create a new THREE.WebGLRenderer
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(1248, 702);
+            document.getElementById("canvas-area").appendChild(renderer.domElement)
+            // Create a UI of 720 pixels high
+            // will scale up to match renderer.domElement's size
+            const ui = new ThreeUI(renderer.domElement, 1080);
+
+            document.getElementById("canvas-area").addEventListener('mousemove',function(){
+                if(ui.draggingElement != null){
+                    uieditor.AddChanges(ui.draggingElement)
+                }
+            });
+
+            $(".lock-text").click(function(){
+                if(uieditor.LockUI()){
+                    $(this).find("i").removeClass("fa-lock")
+                    $(this).find("i").addClass("fa-unlock")
+                }else{
+                    $(this).find("i").addClass("fa-lock")
+                    $(this).find("i").removeClass("fa-unlock")
+                }
+            })
+
+            //var canvas = new fabric.Canvas('ui-editor', { backgroundColor: "#C0C0C0", preserveObjectStacking: true });
+            uieditor.LoadEditor(ui, AssetLoader, project);
+
+            const animate = (deltaTime = 0) => {
+                //rectangle.x = Math.sin(deltaTime / 500) * 100;
+                //rectangle.y = Math.cos(deltaTime / 500) * 100;
+                ui.render(renderer);
+                requestAnimationFrame(animate);
+            };
+            animate();
+
+            $("#show-add-element").on("click", function () {
+                uieditor.LoadImages();
+                $("#add-shape-modal").modal("show");
+            });
+            $("#add-element-shape").on("change", function () {
+                if ($(this).val() == "image") {
+                    var markup = `<div class="form-group col-md-12">
+                                        <label for="image-select">Image</label>
+                                        <select id="image-select" class="image-select form-control">
+                                        </select>
+                                    </div>`;
+                    $("#extra-forms").html(markup);
+                    uieditor.LoadImages();
+                } else if ($(this).val() == "text") {
+                    $("#extra-forms").html('<div class="form-group col-md-12"><label for="add-element-text">Text</label><input type="text" class="form-control" id="add-element-text" placeholder="Element Name"></div>');
+                }
+            });
+            $("#preview-element-btn").click(function () {
+                THEHUB.OpenExternalProgram("ui", $(this).attr("data-file"))
+            });
+            $("#add-element-btn").on("click", function () {
+                if ($("#add-element-shape").val() == "image") {
+                    uieditor.AddShape($("#add-element-name").val(), $("#add-element-shape").val(), $("#image-select").val());
+                } else if ($("#add-element-shape").val() == "text") {
+                    uieditor.AddShape($("#add-element-name").val(), $("#add-element-shape").val(), $("#add-element-text").val());
+                }
+                $("#add-shape-modal").modal("hide");
+            });
+
+            $("#back-btn").on("click", function () {
+                projectView.backToProjectView();
+            });
+
+            $(".new-ui-btn").on("click", function () {
+                uieditor.NewUI();
+            });
+
+            $(".save-ui-btn").on("click", function () {
+                uieditor.SaveUI();
+            });
+
+            $("#undo-btn").click(function(){
+                uieditor.GoBack();
+            })
+
+            $("#reset-btn").click(function(){
+                uieditor.Reset();
+            })
+
+            $(".open-ui-btn").on("click", function () {
+                dialog.showOpenDialog({
+                    defaultPath: p.join(__dirname, "../", project.path, "client/data/ui"),
+                    filters: [
+                        { name: 'UI Files', extensions: ['ui'] },
+                        { name: 'All Files', extensions: ['*'] }
+                    ],
+                    properties: ['openFile',]
+                }, function (files) {
+                    if (files !== undefined) {
+                        console.log(files);
+                        // var uifile = p.join(__dirname, "../", project.path, "client/data/ui/uitest.ui");
+                        uieditor.LoadUIFile(files[0]);
+                        $("#preview-element-btn").attr("data-file", p.basename(files[0]));
+                    }
+                });
+            });
+
+            $("#tools-list").on("click","#center-x",function(){
+                uieditor.CenterElement("x");
+            });
+            $("#tools-list").on("click","#center-y",function(){
+                uieditor.CenterElement("y");
+            });
+
+            $("#tools-list").on("click","#interactable",function(){
+                uieditor.UpdateProperty("interactable", $(this).prop("checked"));
+            });
+            $("#tools-list").on("click","#isinputbox",function(){
+                if ($(this).prop("checked")) $("#input-properties").show();
+                else $("#input-properties").hide();
+                uieditor.UpdateProperty("isinputbox", $(this).prop("checked"));
+            });
+            $("#tools-list").on("click","#input-obscure",function(){
+                uieditor.UpdateProperty("input-obscure", $(this).prop("checked"));
+            });
+            $("#tools-list").on("change", ".properties-input", function () {
+                uieditor.UpdateProperty($(this).attr("property"), $(this).val());
+                uieditor.LoadProperties();
+            });
+            $("#tools-list").on("click", ".select-tag",function(){
+                $("input[property='tag'").val($(this).text());
+                uieditor.UpdateProperty("tag",$(this).text());
+            })
+            $("#tools-list").on("click", "#delete-element", function () {
+                uieditor.DeleteElement();
+            });
+            $("#tools-list").on("click", "#hide-element", function () {
+                uieditor.HideElement();
+            });
+            $("#tools-list").on("click", "#show-add-event", function () {
+                uieditor.LoadImages();
+                $("#add-event-modal").modal("show");
+            });
+
+            $("#tools-list").on("click", ".edit-event-btn", function () {
+                //uieditor.LoadImages();
+                uieditor.deleteEvent($(this).attr("elementId"));
+                uieditor.LoadProperties();
+                //$("#edit-event-modal").modal("show");
+            });
+
+            $("#add-event-action").on("change", () => {
+                if (parseInt($("#add-event-action").val()) < 3) { // UI file
+                    var markup = `<div class="form-group col-md-12">
+                                        <label for="event-ui-file-select">UI File</label>
+                                        <select id="event-ui-file-select" class="ui-file-select form-control">
+                                        </select>
+                                    </div>`;
+                    $("#events-extra-forms").html(markup);
+                    uieditor.LoadUIFiles();
+                } else if (parseInt($("#add-event-action").val()) > 3) { // Audio file
+                    var markup = `<div class="form-group col-md-12">
+                                        <label for="event-audio-select">Audio File</label>
+                                        <select id="event-audio-select" class="audio-select form-control">
+                                        </select>
+                                    </div>`;
+                    $("#events-extra-forms").html(markup);
+                    uieditor.LoadAudioFiles();
+                } else { // Image file
+                    var markup = `<div class="form-group col-md-12">
+                                        <label for="event-image-select">Image</label>
+                                        <select id="event-image-select" class="image-select form-control">
+                                        </select>
+                                    </div>`;
+                    $("#events-extra-forms").html(markup);
+                    uieditor.LoadImages();
+                }
+            });
+            $("#image-select").click(function(){
+                $("#image-preview").attr("src",p.join(THEHUB.GetCurrentProject().path, '/Client/data/Textures',$(this).val()))
+            });
+            $("#add-event-btn").on("click", () => {
+                var type = $("#add-event-type").val();
+                var actionNumber = $("#add-event-action").val();
+                var action = "";
+                var data = "";
+                if (actionNumber == 0) {
+                    action = "loadUITop";
+                    data = $("#event-ui-file-select").val();
+                } else if (actionNumber == 1) {
+                    action = "loadUIBottom";
+                    data = $("#event-ui-file-select").val();
+                } else if (actionNumber == 2) {
+                    action = "unloadUI";
+                    data = $("#event-ui-file-select").val();
+                } else if (actionNumber == 3) {
+                    action = "setImage";
+                    data = $("#event-image-select").val();
+                } else if (actionNumber == 4) {
+                    action = "playSound";
+                    data = $("#event-audio-select").val();
+                } else if (actionNumber == 5) {
+                    action = "playSoundLoop";
+                    data = $("#event-audio-select").val();
+                } else {
+                    action = "stopSound";
+                    data = $("#event-audio-select").val();
+                }
+                uieditor.AddEvent(type, action, data);
+                $("#add-event-modal").modal("hide");
+                uieditor.LoadProperties();
+            });
+        }
+    </script>
+</body>
+
+</html>

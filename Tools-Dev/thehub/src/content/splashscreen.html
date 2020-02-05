@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Loading</title>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- font awesome for icons:-->
+    <link rel="stylesheet" href="../css/fontawesome.css">
+    <style>
+        body {
+            background: #212529;
+            color:#fff;
+        }
+
+        h1{
+            font-size:18px;
+        }
+
+        #status{
+            margin-top:25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-grow text-light" id="status" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <h1 class="text-center">THE HUB</h1>
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+    <!-- /electron compatible-->
+    <script src="../external/jquery-3.4.1.min.js"></script>
+    <script src="../external/popper.min.js"></script>
+    <script src="../external/bootstrap.min.js"></script>
+    <script src="../js/notification.js"></script>
+    <!-- electron compatible:-->
+    <script>if (window.module) module = window.module;</script>
+</body>
+
+</html>

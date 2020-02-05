@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>The HUB</title>
+  <!-- bootsrap css include-->
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <!-- font awesome for icons:-->
+  <link rel="stylesheet" href="../css/fontawesome.css">
+  <!-- the hubs style sheet-->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/notification.css">
+
+</head>
+
+<body>
+  <!-- header-->
+  <header>
+    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark titlebar">
+      <a class="navbar-brand" href="#"></a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item ">
+          <a id="sync-btn" class="titlebar-button disable-when-update project-new nav-link  text-light" href="#"><i class="fas fa-plus"></i>
+            New</a>
+        </li>
+        <li class="nav-item ">
+          <a id="sync-btn" class="titlebar-button disable-when-update open-hub-settings nav-link  text-light" href="#"><i
+              class="fas fa-cog"></i> Settings</a>
+        </li>
+        <li class="nav-item">
+          <a id="sync-btn" class="titlebar-button open-hub-settings nav-link  text-light" href="#"><i
+              class="fas fa-exclamation-triangle text-danger" id="google-status"></i> Google Account: <span
+              id="user-name" class="text-danger">Disconnected</span></a>
+        </li>
+      </ul>
+      <div class="btn-group" role="group">
+        <button value="true" id="min-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+            class="fas fa-window-minimize text-light"></i></button>
+        <button value="true" id="max-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+            class="fas fa-window-maximize text-light"></i></button>
+        <button value="true" id="restore-btn" class="titlebar-button btn btn-default my-2 my-sm-0"><i
+            class="far fa-window-restore text-primary"></i></button>
+        <button value="true" id="close-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+            class="far fa-window-close text-warning"></i></button>
+      </div>
+    </nav>
+  </header>
+  <!-- /header-->
+  <!-- main-->
+  <div id="loader-latest"></div>
+  <main role='main' class = "d-none">
+    <div class="jumbotron">
+      <div class="container-fluid">
+        <h1 class="display-3">The HUB</h1>
+        <p>Create a new project or select an old one:</p>
+        <p><a class="btn btn-primary btn-lg" id="reopen-btn" href="#" role="button"><i class="fas fa-retweet"></i>
+            Continue</a> <a class="btn project-new btn-success btn-lg" href="#" role="button"><i
+              class="fas fa-plus"></i> New</a>
+
+                  <div class="card">
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item"><i class="fas fa-exclamation-triangle text-danger"></i> 
+                            The HUB needs to download the project from the Cloud, when you open the project</li>
+                          <li class="list-group-item"><i class="fas fa-download text-success"></i> 
+                          The HUB has the project downloaded</li>
+                          <li class="list-group-item"><i class="fas fa-cog text-success"></i> 
+                            The HUB does not need to download the latest version of the config</li>
+                            <li class="list-group-item"><i class="fas fa-cog text-danger"></i> 
+                              The HUB needs to download the latest version of the config. This can be only done manually in the project itself. Click there `Check for Updates`</li>
+                              <li class="list-group-item"><i class="far fa-file-code text-success"></i> 
+                                The HUB has the latest version of all scripts</li>
+                                <li class="list-group-item"><i class="fas fa-file-code text-danger"></i> 
+                                  The HUB needs to download the latest version of scripts. This can be only done manually in the project itself. Click there `Check for Updates`</li>
+                        </ul>
+              </div>
+      </div>
+    </div>
+
+    <div class="container-fluid" id="content">
+    </div>
+  </main>
+  <!--/main-->
+  <!-- modals-->
+  <div class="modal" tabindex="-1" role="dialog" id="create-project">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">New Project</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger d-none" id="project-create-error" role="alert">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="name-addon">Name</span>
+            </div>
+            <input type="text" class="form-control" id="project-name" placeholder="Project Name"
+              aria-label="Project Name" aria-describedby="basic-addon">
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="desc-addon">Description</span>
+            </div>
+            <input type="text" class="form-control" id="project-desc" placeholder="Project Description"
+              aria-label="Project Description" aria-describedby="basic-addon2">
+          </div>
+
+          <!-- google -->
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="name-addon">Teamdrive</span>
+            </div>
+            <input type="text" class="form-control" id="teamdrive-name" placeholder="Teamdrive Name"
+              aria-label="Teamdrive Name" aria-describedby="basic-addon">
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Choose</button>
+              <div class="dropdown-menu" id="teamdrives">
+
+              </div>
+            </div>
+          </div>
+
+          <p class="text-info">Status: <span id="teamdrive-update-status">Loaded</span></p>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="name-addon">Card Spreadsheet</span>
+            </div>
+            <input type="text" class="form-control" id="drive-file-name" placeholder="File Name" aria-label="File Name"
+              aria-describedby="basic-addon">
+            <div class="input-group-append">
+              <button class="btn btn-outline-info dropdown-toggle disabled" id="drive-files-dropdown" disabled
+                type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose</button>
+              <div class="dropdown-menu" id="drive-files">
+
+              </div>
+            </div>
+          </div>
+          <p></p>
+          <!-- google integration end-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary disabled" id="save-project" disabled><i class="fas fa-plus"></i><span>Create</span>
+            <div class="spinner-grow text-warning d-none" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="delete-project">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Project</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger project-delete-confirm" data-dismiss="modal" data-path=""><i
+              class="fas fa-trash-alt"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="hub-settings">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Hub Settings</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="editor"></div>
+          <div class="alert alert-danger d-none" id="project-create-error" role="alert">
+          </div>
+          <label for="file-editor-location-input">Executable Location</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">File Editor</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="file-editor-location-input">
+              <label id="file-editor-location-label" class="custom-file-label" for="file-editor-location-input"
+                style="white-space:nowrap; overflow-x:hidden;">Choose file</label>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Lua Validator</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="lua-location-input">
+              <label id="lua-location-label" class="custom-file-label" for="lua-location-input"
+                style="white-space:nowrap; overflow-x:hidden;">Choose file</label>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Excel</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="excel-location-input">
+              <label id="excel-location-label" class="custom-file-label" for="excel-location-input"
+                style="white-space:nowrap; overflow-x:hidden;">Choose file</label>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Render Viewer (Game and UI)</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="viewer-location-input">
+              <label id="viewer-location-label" class="custom-file-label" for="viewer-location-input"
+                style="white-space:nowrap; overflow-x:hidden;">Choose file</label>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="project-folder-desc">Project Folder</span>
+              </div>
+              <input type="text" class="form-control" id="project-folder-settings" placeholder="home/projects"
+                aria-label="" aria-describedby="project-folder-desc">
+            </div>
+
+          <div class="card">
+            <div class="card-body">
+              <button type="button" id="disconnect-google" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i>
+                Disconnect from Google</button>
+              <button type="button" id="clear-cache" class="btn btn-danger"><i class="fas fa-exclamation-triangle"></i>
+                Clean Cache</button>
+            </div>
+          </div>
+          <div class="dev-mode d-none" style="margin-top:16px!important;">
+            <h3>Google Integration</h3>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="google-addon-id">Client ID</span>
+              </div>
+              <input type="text" class="form-control" id="google-client-id" placeholder="Client ID"
+                aria-label="Client ID" aria-describedby="google-addon-id">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="google-addon-secret">Client Secret</span>
+              </div>
+              <input type="text" class="form-control" id="google-client-secret" placeholder="Client Secret"
+                aria-label="Client Secret" aria-describedby="google-addon-secret">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="google-addon-rurl">Redirect URL</span>
+              </div>
+              <input type="text" class="form-control" id="google-client-rurl" placeholder="" aria-label=""
+                aria-describedby="google-addon-rurl">
+            </div>
+          </div>
+          <!-- repository settings -->
+          <div class="dev-mode d-none">
+          <h3>Application Repository</h3>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="repo">Repository (FTP)</span>
+            </div>
+            <input type="text" class="form-control" id="app-repo" placeholder="" aria-label="" aria-describedby="repo">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="repo-port">Port</span>
+            </div>
+            <input type="text" class="form-control" id="app-repo-ftp-port" placeholder="22" value="22" aria-label=""
+              aria-describedby="repo-port">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="repo-secure">SSL/TLS</span>
+            </div>
+            <input type="checkbox" class="form-control" id="app-repo-secure" aria-describedby="repo-secure">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="repo-fpt-user">Username</span>
+            </div>
+            <input type="text" class="form-control" id="app-repo-ftp-user" placeholder="Username" aria-label=""
+              aria-describedby="repo-ftp-user">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="repo-ftp-password">Password</span>
+            </div>
+            <input type="password" class="form-control" id="app-repo-ftp-password" placeholder="passwor" aria-label=""
+              aria-describedby="repo">
+          </div>
+        </div>
+          <!-- end of repositry settings-->
+          <!-- app settings-->
+          <h3>Application Information</h3>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="app-autoupdate-cleint-label">Client Autoupdate</span>
+            </div>
+            <input type="checkbox" class="form-control" id="app-client-autoupdate"
+              aria-describedby="app-autoupdate-client-label">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="app-autoupdate-server-label">Server Autoupdate</span>
+            </div>
+            <input type="checkbox" class="form-control" id="app-server-autoupdate"
+              aria-describedby="app-autoupdate-server-label">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="app-client-lastcheck-label">Client Last Check</span>
+            </div>
+            <input type="text" class="form-control disabled" disabled id="app-client-lastcheck" placeholder="01.01.1970"
+              aria-label="" aria-describedby="app-client-lastcheck-label">
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary" id="check-client-for-update" type="button"><i
+                  class="fas fa-sync-alt"></i><span>Get Latest</span>
+                <div class="spinner-grow text-primary d-none" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </button>
+            </div>
+          </div>
+          <p id="download-status-client" class="d-none"><i class="fas fa-download"></i> Status: <span class="status-text text-info">Checking Version...</span></p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="app-client-version-label">Client Version</span>
+            </div>
+            <input type="text" class="form-control disabled" disabled id="app-client-version" placeholder="1556040353 "
+              aria-label="" aria-describedby="app-client-version-label">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="app-client-latestversion-label">Client Latest Version</span>
+            </div>
+            <input type="text" class="form-control disabled" disabled id="app-client-latestversion"
+              placeholder="1556040370 " aria-label="" aria-describedby="app-client-latestversion-label">
+          </div>
+          <hr>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="app-server-lastcheck-label">Server Last Check</span>
+            </div>
+            <input type="text" class="form-control disabled" disabled id="app-server-lastcheck" placeholder="01.01.1970"
+              aria-label="" aria-describedby="app-server-lastcheck-label">
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary" id="check-server-for-update" type="button"><i
+                  class="fas fa-sync-alt"></i> Get Latest</button>
+            </div>
+          </div>
+          <p id="download-status-server" class="d-none"><i class="fas fa-download"></i> Status: <span class="status-text text-info">Checking Version...</span></p>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="app-server-version-label">Server Version</span>
+            </div>
+            <input type="text" class="form-control disabled" disabled id="app-server-version" placeholder="1556040353 "
+              aria-label="" aria-describedby="app-server-version-label">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="app-server-latestversion-label">Server Latest Version</span>
+            </div>
+            <input type="text" class="form-control disabled" disabled id="app-server-latestversion"
+              placeholder="1556040370 " aria-label="" aria-describedby="app-server-latestversion-label">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="save-hub"><i class="fas fa-check"></i> Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /modals-->
+  <!-- bootsrap & jQuery includes:-->
+  <!-- electron compatible:-->
+  <script>if (typeof module === 'object') { window.module = module; module = undefined; }
+  </script>
+  <!-- /electron compatible-->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <!-- electron compatible:-->
+  <script>if (window.module) module = window.module;</script>
+  <!-- /electron compatible-->
+  <!-- electron rendering process inclde-->
+  <script>
+    const projects = require("../js/project.js");
+    const rendering = require("../js/redering.js");
+    const config = require("../js/config.js");
+    const g = require("../js/google-utils.js");
+    const Store = require('electron-store');
+    const THEHUB = require("../js/thehub.js");
+    const updater = require("../js/app-updater.js");
+    
+    const webservices = require("../js/webservices")
+    THEHUB.Spinner(document.getElementById("content"));
+
+    THEHUB.ParseAppArguments(
+            {
+                arguemnt: "--dev-mode", callback: () => {
+                    $(".dev-mode").removeClass("d-none");
+                }
+            }
+        );
+
+///////////////////////////////////////////////////////////////////////////
+//////////////// APPLICATION UPDATES /////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+      function setLatest(el,type) {
+        const latest = new Date(config.config.apps[type].lastcheck);
+        $(el).val(latest.toLocaleString('de-DE'));
+      }
+
+      function getLatest(type,onUpdate,onError){
+        var u = updater.Updater();
+        u.GetLatest(
+          type,
+          ()=>{
+            THEHUB.NotifSuccess("Success", "Updated the "+THEHUB.toTitleCase(type)+" Application");
+                onUpdate();
+                $("#app-" + type + "-version").val(config.config.apps[type].currentversion);
+                config.SaveConfig(config.config);
+                $("#app-" + type + "-latestversion").val(config.config.apps[type].latestversion);
+                setLatest("#app-" + type + "-lastcheck",type);
+          },
+          ()=>{
+            THEHUB.NotifInfo("No Update needed", "Your "+THEHUB.toTitleCase(type)+" Version is up to date.");
+            onUpdate();
+            $("#app-" + type + "-version").val(config.config.apps[type].currentversion);
+            config.SaveConfig(config.config);
+            $("#app-" + type + "-latestversion").val(config.config.apps[type].latestversion);
+            setLatest("#app-" + type + "-lastcheck",type);
+          },onError
+        )
+      }
+
+function UpdateStatus(type){
+  var status = [{text:"Connect",time:0},{text:"Verify",time:2},{text:"Download",time:3},{text:"Unpack..",time:5}];
+        var statusCounter = 0;
+        var timer = 0;
+        var downloadInter = setInterval(()=>{
+          if(statusCounter <= (status.length -1 ) && status[statusCounter].time == timer){
+            $("#download-status-"+type+" .status-text").text(status[statusCounter].text);
+            statusCounter++;
+          }
+          timer++;
+        },1000)
+        return downloadInter;
+}
+
+
+//////////////// AUTO UPDATE //////////////////////
+
+function AutoUpdate(callback){
+  if(!config.config.apps.server.autoupdate &&  !config.config.apps.client.autoupdate){
+    callback();
+    return;
+  }
+  var ClienHasUpdated = new Event('updated-client');
+  var ServerHasUpdated = new Event('updated-server');
+  var DoneWithAutopUpdate = new Event('done-with-autoupdates');
+  if(config.config.apps.server.autoupdate || config.config.apps.client.autoupdate){
+  $(".jumbotron").addClass("d-none");
+  $("#content").append('<div class="card"> <ul class="list-group list-group-flush"> <li class="list-group-item d-none" id="client-list-autoupdate"><strong>Client:</strong> <i class="far fa-check-circle text-success d-none" id="client-done-update"></i> <p id="download-status-client" class="d-none"><i class="fas fa-download"></i> Status: <span class="status-text text-info">Checking Version...</span></p></li><li class="list-group-item d-none" id="server-list-autoupdate"><strong>Server:</strong> <i class="far fa-check-circle text-success d-none" id="server-done-update"></i> <p id="download-status-server" class="d-none"><i class="fas fa-download"></i> Status: <span class="status-text text-info">Checking Version...</span></p></li></ul></div>');
+  }
+
+  function onError(type){
+    $(".jumbotron").removeClass("d-none");
+    THEHUB.NotifFail("Error","Please check Repository Settings!");
+    callback();
+  }
+
+
+  if(config.config.apps.client.autoupdate){
+    var type = "client";
+    $("#"+type+"-list-autoupdate").removeClass("d-none");
+    var downloadInter = UpdateStatus(type);
+    $("#download-status-"+type).removeClass("d-none");
+    // check if alone:
+      getLatest(type, () => {
+          clearInterval(downloadInter);
+          $("#download-status-client .status-text").text("Checking Version...")
+          $("#download-status-client").addClass("d-none");
+          if(config.config.apps.server.autoupdate){
+            document.dispatchEvent(ClienHasUpdated);
+          }else{
+            document.dispatchEvent(ClienHasUpdated);
+            document.dispatchEvent(ServerHasUpdated);
+          }
+          document.dispatchEvent(DoneWithAutopUpdate);
+          $("#client-done-update").removeClass("d-none");
+        },onError);
+
+  }
+  if(config.config.apps.server.autoupdate){
+    var type = "server";
+    $("#"+type+"-list-autoupdate").removeClass("d-none");
+    var downloadInterServer = UpdateStatus(type);
+    $("#download-status-"+type).removeClass("d-none");
+    if(!config.config.apps.client.autoupdate){
+      getLatest(type, () => {
+          clearInterval(downloadInterServer);
+          $("#download-status-server .status-text").text("Checking Version...")
+          $("#download-status-server").addClass("d-none");
+          document.dispatchEvent(ClienHasUpdated);
+          document.dispatchEvent(ServerHasUpdated);
+          document.dispatchEvent(DoneWithAutopUpdate);
+          $("#server-done-update").removeClass("d-none");
+        },onError);
+    }
+  }
+  var updateStatus = {server:false,client:false};
+  document.addEventListener('updated-client', function (e) {
+    updateStatus.client = true;
+
+    if(config.config.apps.server.autoupdate && config.config.apps.client.autoupdate){
+      getLatest("server", () => {
+          clearInterval(downloadInterServer);
+          $("#download-status-server .status-text").text("Checking Version...")
+          $("#download-status-server").addClass("d-none");
+          document.dispatchEvent(ServerHasUpdated);
+          document.dispatchEvent(DoneWithAutopUpdate);
+          $("#server-done-update").removeClass("d-none");
+        },onError);
+    }
+
+  },false);
+  document.addEventListener('updated-server', function (e) {
+    updateStatus.server = true;
+  },false);
+  document.addEventListener('done-with-autoupdates', function (e) {
+    if(updateStatus.server && updateStatus.client){
+      $(".jumbotron").removeClass("d-none");
+      callback();
+    }
+  }, false);
+
+}
+
+
+//////////////// MANUAL UPDATE ////////////////////// 
+
+
+function clickCheckUpdate(type){
+      $("#check-"+type+"-for-update").click(function () {
+        $(this).find("i").addClass("d-none");
+        $(this).find("span").addClass("d-none");
+        $(this).find(".spinner-grow").removeClass("d-none");
+        var el = $(this);
+        var downloadInter = UpdateStatus(type);
+        $("#download-status-"+type).removeClass("d-none");
+        getLatest(type, () => {
+          el.find("i").removeClass("d-none");
+          el.find("span").removeClass("d-none");
+          el.find(".spinner-grow").addClass("d-none");
+          clearInterval(downloadInter);
+          $("#download-status-"+type+" .status-text").text("Checking Version...")
+          $("#download-status-"+type).addClass("d-none");
+        },()=>{
+          el.find("i").removeClass("d-none");
+          el.find("span").removeClass("d-none");
+          el.find(".spinner-grow").addClass("d-none");
+          clearInterval(downloadInter);
+          $("#download-status-"+type+" .status-text").text("Checking Version...")
+          $("#download-status-"+type).addClass("d-none");
+          THEHUB.NotifFail("Error","Please check Repository Settings!");
+      });
+      });
+    }
+//////////////////////////////////////////////////////////////////////
+/// connect to web service
+/// Login to google and display projects
+/// on success make chooser visible
+//////////////////////////////////////////////////////////////////////
+
+    g.googleSignIn(function (user) {
+      $("#user-name").text(user.displayName);
+      $("#user-name").removeClass("text-danger");
+      $("#google-status").removeClass("exclamation-triangle");
+      $("#google-status").addClass("fa-check-circle");
+      $("#google-status").removeClass("text-danger");
+      $("#google-status").addClass("text-success");
+      jQueryFunctions();
+    });
+
+    document.onreadystatechange = () => {
+      if (document.readyState == "complete") {
+        rendering.handleWindowControls();
+        AutoUpdate(()=>{
+            $("main").removeClass("d-none");
+            projects.handleProjects();
+
+
+        });
+      }
+    }
+    function deletethis(datapath) {
+      $(".project-delete-confirm").attr("data-path", datapath);
+      $("#delete-project").modal("show");
+    }
+
+    function jQueryFunctions() {
+      $(".project-open-file").click(function () {
+        //$("main").html("<p class='text-info'>Loading...</p>");
+        projects.OpenProjectFile();
+      });
+
+      $("#reopen-btn").click(function () {
+        projects.OpenLastProject();
+      });
+
+    clickCheckUpdate("client");
+    clickCheckUpdate("server");
+
+      $(".project-new").click(function () {
+        THEHUB.Spinner(document.getElementById("loader-latest"));
+        $("#loader-latest").append("<p class='text-info text-center'>Please wait till we have fetched all important data from Google...</p>");
+        $(".jumbotron").addClass("d-none");
+        $("#content").addClass("d-none");
+        $(".disable-when-update").addClass("d-none");
+        $("#teamdrives").empty();
+        g.GetTeamDrives(function (res) {
+          res.data.items.forEach((v, k) => {
+            $("#teamdrives").append('<a class="dropdown-item teamdrive-id" href="#" data-id="' + v.id + '">' + v.name + '</a>');
+          });
+          $(".teamdrive-id").click(function () {
+            $("#teamdrive-name").val($(this).text());
+            $("#teamdrive-name").attr("data-id", $(this).attr("data-id"));
+            $("#teamdrive-update-status").text("Fetch files from Google...");
+            g.GetFilesFromTeamDrive($(this).attr("data-id"), (files) => {
+              $("#drive-files").empty();
+              if (files.length > 0) {
+                $("#drive-files-dropdown").removeClass("disabled");
+                $("#drive-files-dropdown").removeAttr("disabled");
+                files.forEach((f, k) => {
+                  $("#drive-files").append('<a class="dropdown-item drive-file-id" href="#" data-id="' + f.id + '">' + f.name + '</a>');
+                });
+              } else {
+                $("#drive-files-dropdown").addClass("disabled");
+                $("#drive-files-dropdown").attr("disabled");
+              }
+              $("#teamdrive-update-status").text("Done");
+              $(".drive-file-id").click(function () {
+                $("#drive-file-name").val($(this).text());
+                $("#drive-file-name").attr("data-id", $(this).attr("data-id"));
+                $("#save-project").removeClass("disabled");
+                $("#save-project").removeAttr("disabled");
+              });
+            });
+
+
+
+          });
+          $("#create-project").modal("show");
+        });
+
+      });
+
+      $("#create-project").on("hide.bs.modal",function(){
+        $("#loader-latest").html("");
+        $(".jumbotron").removeClass("d-none");
+        $("#content").removeClass("d-none");
+        $(".disable-when-update").removeClass("d-none");
+      });
+
+      $(".open-hub-settings").click(function () {
+        $("#file-editor-location-label").html(config.config.programs.code);
+        $("#project-folder-settings").val(config.config.projects);
+        $("#lua-location-label").html(config.config.programs.lua);
+        $("#excel-location-label").html(config.config.programs.excel);
+        $("#viewer-location-label").html(config.config.programs.viewer);
+        $("#google-client-id").val(config.config.google.id);
+        $("#google-client-secret").val(config.config.google.secret);
+        $("#google-client-rurl").val(config.config.google.redirect);
+        $("#app-repo").val(config.config.repo.host);
+        $("#app-repo-ftp-user").val(config.config.repo.user);
+        $("#app-repo-ftp-port").val(config.config.repo.port);
+        $("#app-repo-secure").prop("checked", config.config.repo.secure);
+        $("#app-client-autoupdate").prop("checked", config.config.apps.client.autoupdate);
+        $("#app-server-autoupdate").prop("checked", config.config.apps.server.autoupdate);
+        setLatest("#app-server-lastcheck","server");
+        setLatest("#app-client-lastcheck","client");
+        $("#hub-settings").modal("show");
+      });
+      $("#app-server-version").val(config.config.apps.server.currentversion);
+      $("#app-client-version").val(config.config.apps.client.currentversion);
+      $("#app-client-latestversion").val(config.config.apps.client.latestversion);
+      $("#app-server-latestversion").val(config.config.apps.server.latestversion);
+
+
+      $("#save-hub").click(function () {
+        config.SaveConfig(config.config);
+        $("#hub-settings").modal("hide");
+        THEHUB.NotifSuccess("Save", "Saved config");
+      });
+
+      $(".project-delete-confirm").click(function () {
+        $("#delete-project").modal("hide");
+      });
+
+      $("#save-project").click(function () {
+        var name = $("#project-name").val();
+        var projectName = name.toLowerCase();
+        const regex = /\s|\W/gm;
+        projectName = projectName.replace(regex, '');
+        if (name.length == 0 || projectName.length == 0) $("#project-name").addClass("bg-danger text-white");
+        var desc = $("#project-desc").val();
+        if (desc.length == 0) $("#project-desc").addClass("bg-danger text-white");
+
+        if (desc.length != 0 && name.length != 0 && projectName.length != 0) {
+          $("#project-name").removeClass("bg-danger text-white");
+          $("#project-desc").removeClass("bg-danger text-white");
+          $("#project-progress").removeClass("d-none");
+          $(this).find("i").addClass("d-none");
+          $(this).find("span").addClass("d-none");
+          $(this).find(".spinner-grow").removeClass("d-none");
+          projects.NewProject({
+            name: name,
+            realname: projectName,
+            desc: desc,
+            path: config.MakeProjectDir(projectName),
+            google: {
+              drive: $("#teamdrive-name").attr("data-id"),
+              teamdrive: true,
+              file: $("#drive-file-name").attr("data-id"),
+              meta: {
+                drive: $("#teamdrive-name").val(),
+                file: $("#drive-file-name").val(),
+              }
+            }
+          }, obj => {
+            if (obj.hasOwnProperty("error")) {
+              $("#project-create-error").removeClass("d-none");
+              $("#project-create-error").text(obj.error);
+              $(this).find(".spinner-grow").addClass("d-none");
+              $(this).find("i").removeClass("d-none");
+              $(this).find("span").removeClass("d-none");
+              THEHUB.NotifFail("Fail", obj.error);
+            } else {
+              $("#create-project").modal("hide");
+              THEHUB.NotifSuccess("Success", "Project was created");
+              $(this).find(".spinner-grow").addClass("d-none");
+              $(this).find("i").removeClass("d-none");
+              $(this).find("span").removeClass("d-none");
+            }
+          });
+        }
+        //
+      });
+
+      $("#file-editor-location-input").change(function (event) {
+        var fileName = event.target.files[0].path;
+        $("#file-editor-location-label").html(fileName);
+        config.config.programs.code = fileName;
+      });
+
+      $("#project-folder-settings").change(function () {
+        config.config.projects = $(this).val();
+      })
+
+      $("#lua-location-input").change(function () {
+        var fileName = event.target.files[0].path;
+        $("#lua-location-label").html(fileName);
+        config.config.programs.lua = fileName;
+      });
+
+      $("#excel-location-input").change(function () {
+        var fileName = event.target.files[0].path;
+        $("#excel-location-label").html(fileName);
+        config.config.programs.excel = fileName;
+      });
+
+      $("#viewer-location-input").change(function () {
+        var fileName = event.target.files[0].path;
+        $("#viewer-location-label").html(fileName);
+        config.config.programs.viewer = fileName;
+      });
+
+      $("#google-client-id").change(function (event) {
+        config.config.google.id = $(this).val();
+      });
+      $("#google-client-secret").change(function (event) {
+        config.config.google.secret = $(this).val();
+      });
+      $("#google-client-rurl").change(function (event) {
+        config.config.google.redirect = $(this).val();
+      });
+      $("#app-repo").change(function (event) {
+        config.config.repo.host = $(this).val();
+      });
+      $("#app-repo-secure").change(function (event) {
+        config.config.repo.secure = ($(this).val() === "true");
+      });
+      $("#app-repo-ftp-user").change(function (event) {
+        config.config.repo.user = $(this).val();
+      });
+      $("#app-repo-ftp-password").change(function (event) {
+        config.config.repo.password = $(this).val();
+      });
+      $("#app-repo-ftp-port").change(function (event) {
+        config.config.repo.port = $(this).val();
+      });
+      $("#app-client-autoupdate").change(function(){
+        config.config.apps.client.autoupdate = $(this).prop("checked");
+      });
+      $("#app-server-autoupdate").change(function(){
+        config.config.apps.server.autoupdate =  $(this).prop("checked");
+      });
+      $("#clear-cache").click(() => {
+        THEHUB.ClearCache();
+      });
+      $("#disconnect-google").click(() => {
+        var store = new Store();
+        store.delete("googleUser");
+        store.delete("googleToken");
+        document.querySelector("main").innerHTML = "";
+        THEHUB.Spinner(document.querySelector("main"));
+        $("#hub-settings").modal("hide");
+        location.reload();
+
+      })
+
+    }
+  </script>
+</body>
+
+</html>

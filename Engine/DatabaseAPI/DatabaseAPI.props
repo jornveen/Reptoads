@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir>$(SolutionDir)build\$(ProjectName)\$(Platform)\$(Configuration)\bin\</OutDir>
+    <IntDir>$(SolutionDir)build\$(ProjectName)\$(Platform)\$(Configuration)\obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\basiclogger\external\fmt\include;$(SolutionDir)external\basiclogger\include;$(SolutionDir)external\Enet\include;$(SolutionDir)NetworkLib\include;$(ProjectDir)include;$(SolutionDir)external\ptl\include;$(SolutionDir)external\mariadb\include\mysql;$(SolutionDir)external\mariadb\include;$(SolutionDir)external\FlatValueMap\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)build\BasicLogger\$(Platform)\$(Configuration)\bin;$(SolutionDir)external\mariadb\lib;$(SolutionDir)build\NetworkLib\$(Platform)\$(Configuration)\bin;$(SolutionDir)build\ptl\$(Platform)\$(Configuration)\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ptl.lib;libmariadb.lib;mariadbclient.lib;mariadbclientpp-$(Configuration).lib;mysqlservices.lib;NetworkLib.lib;BasicLogger.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

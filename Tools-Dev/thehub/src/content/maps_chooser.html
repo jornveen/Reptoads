@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The HUB</title>
+    <!-- bootsrap css include-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- font awesome for icons:-->
+    <link rel="stylesheet" href="../css/fontawesome.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <!-- header-->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark titlebar">
+            <a class="navbar-brand" href="#"></a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a id="back-btn" class="titlebar-button project-new nav-link  text-light" href="#"><i
+                            class="fas fa-chevron-left"></i></a>
+                </li>
+            </ul>
+            <div class="btn-group" role="group">
+                <button value="true" id="min-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-minimize text-light"></i></button>
+                <button value="true" id="max-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-maximize text-light"></i></button>
+                <button value="true" id="restore-btn" class="titlebar-button btn btn-default my-2 my-sm-0"><i
+                        class="far fa-window-restore text-primary"></i></button>
+                <button value="true" id="close-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="far fa-window-close text-warning"></i></button>
+            </div>
+        </nav>
+    </header>
+    <!-- /header-->
+    <!-- main-->
+    <main role='main'>
+        <div class="container-fluid" id="project_viewer">
+            <div class="row justify-content-center">
+                <div class="col-8 hidden-md-down" id="test">
+                    <div class="card">
+                        <div class="card-header">
+                            Maps
+                        </div>
+                        <div class="card-body">
+						<p><i class="fas fa-info-circle"></i> Map are a sequences of chapters. A chapter is a scene created in the Scene Editor. (saved with the file ending <strong>.glb</strong>.<br>On the right side all avaible <strong>.glb</strong> are listed. By clicking on an exsitsing map you can edit a map. Editing means changing its name and adding chapters (scenes) to the collection. (map)</p>
+                            <div class="form-group" id="new-map-div">
+                                <button class="btn btn-primary" id="new-map">
+                                    <i class="fas fa-plus"></i> New Map
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <ul class="list-group" id="MapsList">
+                                </ul>
+
+                            </div>
+                            <div id="MapForm"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Models
+                        </div>
+                        <ul class="list-group list-group-flush hide" id="InspectrList">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--/main-->
+    <!-- modals-->
+    <div class="modal" tabindex="-1" role="dialog" id="map-saved-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Map Saved</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This map was saved!</p>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modals-->
+    <!-- bootsrap & jQuery includes:-->
+    <!-- electron compatible:-->
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+    <!-- /electron compatible-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- electron compatible:-->
+    <script>if (window.module) module = window.module;</script>
+    <script>
+        const rendering = require("../js/redering.js");
+        const projectView = require("../js/project_view.js");
+        const mapsChooser = require("../js/maps_chooser.js");
+        const config = require("../js/project_config.js");
+
+        const THEHUB = require("../js/thehub.js");
+        THEHUB.ParseAppArguments(
+            {arguemnt:"--dev-mode",callback:()=>{
+                $("#build-li").html("");
+                }
+            }
+        );
+        
+        THEHUB.LoadProjectFromCookies();
+        
+        THEHUB.OnCookiesLoaded((project)=>{
+            THEHUB.ValidateProjectAndLoad();
+        });
+        
+        THEHUB.OnProjectValidationError((err,project)=>{
+            $("#project-header-name").text("Project: " + project.name);
+            $("main").html("<div class='container'><div class='alert alert-danger'><i class='fas fa-exclamation-triangle'></i> <strong>Oops...</strong> "+err+" <br><br><a  class='back-btn btn btn-secondary text-light' href='project_chooser.html'><i class='fas fa-reply'></i> Back</a></div></div>");
+        });
+
+
+        THEHUB.OnProjectValidated((project)=>{
+            MainFunctions(project);
+        });
+        document.onreadystatechange = () => {
+            if (document.readyState == "complete") {
+                rendering.handleWindowControls();
+            }
+        }
+
+        function MainFunctions(project) {
+            $("project").text(project.name);
+
+            config.LoadProjectConfig(project.path);
+
+            mapsChooser.LoadMaps(project.path + "/client/data/maps.json");
+            console.log(config.ClientConfig);
+            mapsChooser.SetRoot(project.path + "/client/" + config.ClientConfig.assets.models);
+            console.log(project.path + "/client/" + config.ClientConfig.assets.models);
+            mapsChooser.UpInspect("");
+
+            $("#back-btn").on("click", function () {
+                projectView.backToProjectView();
+            });
+
+            $("#new-map").on("click", function () {
+                mapsChooser.CreateNewMap();
+            });
+
+            $("#MapForm").on("click", ".map-back", function () {
+                mapsChooser.LoadMaps(project.path + "/client/data/maps.json");
+            });
+
+            $("#MapForm").on("click", ".map-save", function () {
+                mapsChooser.SaveMaps( (status) => {
+                    if (status) {
+                        $("#map-saved-modal").modal("show");
+                        mapsChooser.LoadMaps(project.path + "/client/data/maps.json");
+                    }
+                });
+            });
+
+            $("#MapsList").on("click", ".map-list-item", function () {
+                var name = $(this).attr("map-name");
+                mapsChooser.OpenMap(name);
+            });
+
+            $("#InspectrList").on("click", ".add-scene", function () {
+                var scene = $(this).attr("scene-name");
+                $(this).removeClass("add-scene");
+                $(this).removeClass("btn-primary");
+
+                $(this).addClass("remove-scene");
+                $(this).addClass("btn-danger");
+
+                $(this).html('<i class="fas fa-minus"></i>');
+                mapsChooser.AddSceneToMap(scene);
+            });
+
+            $("#InspectrList").on("click", ".remove-scene", function () {
+                var scene = $(this).attr("scene-name");
+                $(this).removeClass("remove-scene");
+                $(this).removeClass("btn-danger");
+
+                $(this).addClass("add-scene");
+                $(this).addClass("btn-primary");
+
+                $(this).html('<i class="fas fa-plus"></i>');
+                mapsChooser.RemoveSceneFromMap(scene);
+            });
+
+        }
+    </script>
+</body>
+
+</html>

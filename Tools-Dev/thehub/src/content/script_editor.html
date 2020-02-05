@@ -1,0 +1,28 @@
+<!doctype HTML>
+<html>
+<head>
+	<title>Basic Example</title>
+	
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+	<script src="../threejs/build/draw2d.min.js"></script>
+
+	<style type="text/css">
+	body { margin: 0; }	
+	</style>
+</head>
+<body>
+<script type="text/javascript">
+    $(window).load(function () {
+
+    var canvas = new draw2d.Canvas("gfx_holder");
+
+    var figure1 = new draw2d.shape.basic.Oval();
+    var figure2 = new draw2d.shape.basic.Rectangle();
+    canvas.add(figure1,100,100);
+    canvas.add(figure2,120,150);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <ShaderBinaryFolder>$(SolutionDir)..\Projects\froggy/Client/data/Shaders/bin/</ShaderBinaryFolder>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutDir>$(SolutionDir)build\$(ProjectName)\$(Platform)\$(Configuration)\bin\</OutDir>
+    <IntDir>$(SolutionDir)build\$(ProjectName)\$(Platform)\$(Configuration)\obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\ghc;$(SolutionDir)external\mariadb\include\mysql;$(SolutionDir)external\mariadb\include;$(SolutionDir)DatabaseAPI\include;$(SolutionDir)external\eventpp\include;$(SolutionDir)external\FlatValueMap\include;$(SolutionDir)external\tinygltf\include;$(SolutionDir)external\rapidjson\include;$(SolutionDir)external\toolkit\include;./include;$(SolutionDir)external\Cereal\include;$(SolutionDir)external\lua\include;$(SolutionDir)external\sol2-develop;$(SolutionDir)external\Enet\include;$(SolutionDir)external\FMOD\inc;$(SolutionDir)external\GLM\include;$(SolutionDir)external\Stb;$(SolutionDir)NetworkLib\Include;$(SolutionDir)TBSGFramework\include;$(SolutionDir)external\ptl\include;$(SolutionDir)external\brofiler\include;$(SolutionDir)TBSGFramework\include\rendering\shader_headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>GLM_FORCE_EXPLICIT_CTOR;GLM_ENABLE_EXPERIMENTAL=1;DO_NOT_MAKE_USE_OF_CUSTOM_ALLOC;GLM_FORCE_DEPTH_ZERO_TO_ONE;GLM_FORCE_XYZW_ONLY;NOMINMAX=1;_CRT_SECURE_NO_WARNINGS;GLM_FORCE_RIGHT_HANDED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4201;4458</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <OptimizationLevel>Level3</OptimizationLevel>
+      <InlinedScopes>false</InlinedScopes>
+      <CppLanguageStd>Cpp14</CppLanguageStd>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\FMOD\lib;$(SolutionDir)external\lua\lib;$(SolutionDir)build\NetworkLib\$(Platform)\$(configuration)\bin;$(SolutionDir)build\Enet\$(Platform)\$(configuration)\bin;$(SolutionDir)build\ptl\$(Platform)\$(configuration)\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Link>
+      <Addressing>NonAslr</Addressing>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="ShaderBinaryFolder">
+      <Value>$(ShaderBinaryFolder)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

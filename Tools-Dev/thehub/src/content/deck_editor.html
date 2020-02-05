@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The HUB</title>
+    <!-- bootsrap css include-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- font awesome for icons:-->
+    <link rel="stylesheet" href="../css/fontawesome.css">
+
+    <link rel="stylesheet" href="../css/notification.css">
+</head>
+
+<body>
+    <!-- header-->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark titlebar">
+            <a class="navbar-brand" href="#"></a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a id="back-btn" class="titlebar-button project-new nav-link  text-light" href="#"><i
+                            class="fas fa-reply"></i>
+                        Back</a>
+                </li>
+            </ul>
+            <div class="btn-group" role="group">
+                <button value="true" id="min-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-minimize text-light"></i></button>
+                <button value="true" id="max-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-maximize text-light"></i></button>
+                <button value="true" id="restore-btn" class="titlebar-button btn btn-default my-2 my-sm-0"><i
+                        class="far fa-window-restore text-primary"></i></button>
+                <button value="true" id="close-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="far fa-window-close text-warning"></i></button>
+                        
+            </div>
+        </nav>
+    </header>
+    <!-- /header-->
+    <!-- main-->
+    <main role='main' style="margin:15px;margin-top:64px;" >
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="uDecks-tab" data-toggle="tab" href="#uDecks" role="tab" aria-controls="uDecks" aria-selected="true">User Decks</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="mDecks-tab" data-toggle="tab" href="#mDecks" role="tab" aria-controls="mDecks" aria-selected="false">Monster Decks</a>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content">
+                        <div class="tab-pane active" id="uDecks" role="tabpanel" aria-labelledby="uDecks-tab">
+                                <div id="loader"></div>
+            <div class="card container d-none" id="deck-viewer">
+                    <div class="card-body">
+                      <h5 class="card-title">Deck Editor</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Select Deck</h6>
+                      <!--- add deck-->
+                      <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="DeckName" placeholder="Deck Name">
+                            <div class="input-group-prepend">
+                              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select User</button>
+                              <div class="dropdown-menu" id="select-user">
+                              </div>
+                            </div>
+                            <input type="text" id="DeckUser" class="form-control disabled" disabled aria-label="Text input with dropdown button">
+                          </div>                      
+                      <!-- ./-->
+                      <button class="btn btn-outline-success" type="button" id="save">Save</button>
+                      
+                      <div class="card d-none" id="cards-in-deck-cont" style="margin-top:15px;">
+                            <div class="card-header">
+                                    Cards in Deck - <span id="deck-name"></span> <span class="badge badge-dark" id="cards-in-deck">0</span>
+                                  </div>
+                                                      <!--- add deck-->
+                    <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Card</button>
+                              <div class="dropdown-menu" id="selected-card">
+                              </div>
+                            </div>
+                            <input type="text" id="CardName" class="form-control disabled" disabled>
+                          </div>                      
+                      <!-- ./-->
+                      <button class="btn btn-outline-primary" type="button" id="AddCard">Add</button>
+                      <ul class="list-group list-group-flush" id="card-list">
+                        </ul>
+                    </div>
+
+                    </div>
+
+                    <div class="card" >
+                            <div class="card-header">
+                                    Decks
+                                  </div>
+                            <ul class="list-group list-group-flush" id="deck-list">
+                            </ul>
+                  </div>
+
+                  </div>
+                  </div>
+                  <div class="tab-pane" id="mDecks" role="tabpanel" aria-labelledby="mDecks-tab">
+
+
+                        <div class="card-body">
+                                <h5 class="card-title">Deck Editor</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Select Deck</h6>
+                                <!--- add deck-->
+                                <div class="input-group mb-3">
+                                      <input type="text" class="form-control" id="mDeckName" placeholder="Monster Deck Name">
+                                    </div>                      
+                                <!-- ./-->
+                                <button class="btn btn-outline-success" type="button" id="msave">Save</button>
+                                
+                                <div class="card d-none" id="mcards-in-deck-cont" style="margin-top:15px;">
+                                      <div class="card-header">
+                                              Cards in Deck - <span id="mdeck-name"></span> <span class="badge badge-dark" id="mcards-in-deck">0</span>
+                                            </div>
+                                                                <!--- add deck-->
+                              <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Select Monster Card</button>
+                                        <div class="dropdown-menu" id="mselected-card">
+                                        </div>
+                                      </div>
+                                      <input type="text" id="mCardName" class="form-control disabled" disabled>
+                                    </div>                      
+                                <!-- ./-->
+                                <button class="btn btn-outline-primary" type="button" id="mAddCard">Add</button>
+                                <ul class="list-group list-group-flush" id="mcard-list">
+                                  </ul>
+                              </div>
+          
+                              </div>
+
+
+                        <div class="card" >
+                                <div class="card-header">
+                                        Monster Decks
+                                      </div>
+                                <ul class="list-group list-group-flush" id="mdeck-list">
+                                </ul>
+                      </div>
+
+
+                  </div>
+                </div>
+
+    </main>
+
+
+    <!-- bootsrap & jQuery includes:-->
+    <!-- electron compatible:-->
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+    <!-- /electron compatible-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.min.js"></script>
+
+    <script src="../threejs/build/three.min.js"></script>
+    <script src="../three-ui/lib/asset-loader.min.js"></script>
+
+    <!-- electron compatible:-->
+    <script>if (window.module) module = window.module;</script>
+    <script>
+        const ThreeUI = require("../three-ui/src/three-ui/ThreeUI.js")
+        const rendering = require("../js/redering.js");
+        const projectView = require("../js/project_view.js");
+        const p = require('path');
+        var event = new CustomEvent('cookies-loaded', { detail: { project: null } });
+        const THEHUB = require("../js/thehub.js");
+        const webservices = require('../js/webservices').Webservice();
+        const { remote } = require('electron');
+        const dialog = remote.dialog;
+        THEHUB.ParseAppArguments(
+            {
+                arguemnt: "--dev-mode", callback: () => {
+                    $("#build-li").html("");
+                }
+            }
+        );
+
+        THEHUB.LoadProjectFromCookies();
+
+        THEHUB.OnCookiesLoaded((project) => {
+            THEHUB.ValidateProjectAndLoad();
+        });
+
+        THEHUB.OnProjectValidationError((err, project) => {
+            $("#project-header-name").text("Project: " + project.name);
+            $("main").html("<div class='container'><div class='alert alert-danger'><i class='fas fa-exclamation-triangle'></i> <strong>Oops...</strong> " + err + " <br><br><a  class='back-btn btn btn-secondary text-light' href='project_chooser.html'><i class='fas fa-reply'></i> Back</a></div></div>");
+        });
+
+
+        THEHUB.OnProjectValidated((project) => {
+            MainFunctions(project);
+        });
+        document.onreadystatechange = () => {
+            if (document.readyState == "complete") {
+                rendering.handleWindowControls();
+                $('main').removeClass("d-none")
+            }
+        }
+
+        $("#back-btn").on("click", function () {
+            console.log(66)
+                projectView.backToProjectView();
+        });
+
+        function MainFunctions(project) {
+            THEHUB.Spinner(document.getElementById("loader"));
+            function DisplayDeckList(){
+                $("#deck-list").html("");
+                webservices.GetDecks({},(deck)=>{
+                    webservices.GetProfiles(deck.profileId,function(r){
+                        $("#deck-list").append(' <li class="list-group-item">'+deck.name+' Profile: <strong>'+r.username+'</strong> <button class="btn btn-danger float-right deck-del" data-id="'+deck.id+'"><i class="fas fa-trash-alt"></i></button>  <button class="btn btn-primary float-right deck-edit" data-id="'+deck.id+'" data-deck="'+deck.name+'" data-profile="'+deck.profileId+'">Edit</button></li>');
+
+                })
+                                   })
+                                   $("#mdeck-list").html("");
+                webservices.GetMonsterDeck({projectId:1},(deck)=>{
+                        $("#mdeck-list").append(' <li class="list-group-item">'+deck.name+'  <button class="btn btn-danger float-right mdeck-del" data-id="'+deck.id+'"><i class="fas fa-trash-alt"></i></button>  <button class="btn btn-primary float-right mdeck-edit" data-id="'+deck.id+'" data-deck="'+deck.name+'">Edit</button></li>');
+                                   })
+            }
+
+
+            webservices.OnEvent("get-decks",function(){
+                $("#loader").addClass("d-none")
+                $("#deck-viewer").removeClass("d-none")
+            })
+            
+            $("#deck-list").on("click",".deck-del",function(){
+                var deckID = parseInt($(this).attr("data-id"));
+                webservices.Delete("decks",[{
+                    name:"id",
+                    value:deckID
+                }],function(r){
+                    DisplayDeckList();
+                    THEHUB.NotifSuccess("Success","Deleted deck");
+                })
+            });
+
+            $("#mdeck-list").on("click",".mdeck-del",function(){
+                var deckID = parseInt($(this).attr("data-id"));
+                webservices.Delete("monsterDecks",[{
+                    name:"id",
+                    value:deckID
+                }],function(r){
+                    DisplayDeckList();
+                    THEHUB.NotifSuccess("Success","Deleted Monster deck");
+                })
+            });
+
+
+            function DisplayDeckCards(projectId,deckID,profileID){
+                $("#card-list").html("");
+                $("#cards-in-deck-cont").addClass("d-none")
+                webservices.GetCards({
+                    projectId:1,
+                    byDeckId:deckID,
+                    profileId:profileID
+                },function(card){
+                    if(!Array.isArray(card)){
+                        $("#card-list").append(' <li class="list-group-item"> <h3>'+card.name+'</h3> <blockquote class="blockquote"><p class="mb-0">'+card.description+'</p></blockquote>  <button class="btn btn-danger float-right card-del" data-profileId="'+profileID+'" data-deckId="'+deckID+'" data-id="'+card.id+'"><i class="fas fa-trash-alt"></i></button> </li>');
+                    }else{
+                        $("#card-list").append(' <li class="list-group-item">Deck is empty</li>');
+                    }
+                },undefined,"get-cards-of-deck");
+                $("#selected-card").html("");
+                webservices.GetCards({
+                    projectId:1,
+                    profileId:profileID
+                },function(card){
+                    if(!Array.isArray(card)){
+                        $("#selected-card").append(' <a class="dropdown-item" href="#" deckId="'+deckID+'" card-name="'+card.name+'" user-id="'+profileID+'" card-id="'+card.id+'">'+card.name+'</a>');
+                    }
+                });
+                
+                webservices.OnEvent("get-cards-of-deck",function(data){
+                    $("#cards-in-deck").text(data.detail.length)
+                    $("#cards-in-deck-cont").removeClass("d-none")
+                })
+            }
+
+            function DisplayMonsterDeckCards(projectId,deckID){
+                $("#mcard-list").html("");
+                $("#mcards-in-deck-cont").addClass("d-none")
+                webservices.GetMonsters({
+                    projectId:1,
+                    byDeckId:deckID
+                },function(card){
+                    console.log(card)
+                    if(!Array.isArray(card)){
+                        $("#mcard-list").append(' <li class="list-group-item"> <h3>'+card.name+'</h3> <blockquote class="blockquote"><p class="mb-0">'+card.description+'</p></blockquote>  <button class="btn btn-danger float-right mcard-del"  data-deckId="'+deckID+'" data-id="'+card.id+'"><i class="fas fa-trash-alt"></i></button> </li>');
+                    }else{
+                        $("#mcard-list").append(' <li class="list-group-item">Deck is empty</li>');
+                    }
+                },undefined,"mget-cards-of-deck");
+                $("#mselected-card").html("");
+                webservices.GetMonsters({
+                    projectId:1
+                },function(card){
+                    if(!Array.isArray(card)){
+                        $("#mselected-card").append(' <a class="dropdown-item" href="#" deckId="'+deckID+'" card-name="'+card.name+'"  card-id="'+card.id+'">'+card.name+'</a>');
+                    }
+                });
+                
+                webservices.OnEvent("mget-cards-of-deck",function(data){
+                    $("#mcards-in-deck").text(data.detail.length)
+                    $("#mcards-in-deck-cont").removeClass("d-none")
+                })
+            }
+
+            $("#selected-card").on("click","a",function(){
+                $("#CardName").val($(this).attr("card-name"));
+                $("#CardName").attr("deckId",$(this).attr("deckId"))
+                $("#CardName").attr("user-id",$(this).attr("user-id"))
+                $("#CardName").attr("card-id",$(this).attr("card-id"))
+            })
+
+            $("#mselected-card").on("click","a",function(){
+                $("#mCardName").val($(this).attr("card-name"));
+                $("#mCardName").attr("deckId",$(this).attr("deckId"))
+                $("#mCardName").attr("card-id",$(this).attr("card-id"))
+            })
+
+            $("#AddCard").click(function(){
+                var deckId = parseInt($("#CardName").attr("deckId"))
+                var cardId = parseInt($("#CardName").attr("card-id"))
+                var profileID = parseInt($("#CardName").attr("user-id"))
+                let query = {
+                table:"deckCardRelation",
+                data:{
+                    deckId: deckId,
+                    cardId:cardId
+                }
+                }
+            webservices.Insert(query,()=>{
+                DisplayDeckCards(1,deckId,profileID);
+                THEHUB.NotifSuccess("Success","Added card to deck");
+            },(err)=>{console.log(err)},"updated-decks");
+            })
+
+            $("#mAddCard").click(function(){
+                var deckId = parseInt($("#mCardName").attr("deckId"))
+                var cardId = parseInt($("#mCardName").attr("card-id"))
+                let query = {
+                table:"monsterDeckRelation",
+                data:{
+                    deckId: deckId,
+                    monsterId:cardId
+                }
+                }
+            webservices.Insert(query,()=>{
+                DisplayMonsterDeckCards(1,deckId)
+                THEHUB.NotifSuccess("Success","Added monster to deck");
+            },(err)=>{console.log(err)},"updated-mdecks");
+            })
+            $("#mcard-list").on("click",".mcard-del",function(){
+                var deckId = $(this).attr("data-deckId");
+                var cardId = $(this).attr("data-id");
+                webservices.Delete("monsterDeckRelation",[{
+                    name:"deckId",
+                    value:deckId
+                },{
+                    name:"monsterId",
+                    value:cardId
+                }],function(r){
+                    THEHUB.NotifSuccess("Success","Deleted Monster from Deck");
+                    DisplayMonsterDeckCards(1,deckId)
+                });
+            })
+            $("#card-list").on("click",".card-del",function(){
+                var profileID = $(this).attr("data-profileId");
+                var deckId = $(this).attr("data-deckId");
+                var cardId = $(this).attr("data-id");
+                webservices.Delete("deckCardRelation",[{
+                    name:"deckId",
+                    value:deckId
+                },{
+                    name:"cardId",
+                    value:cardId
+                }],function(r){
+                    THEHUB.NotifSuccess("Success","Deleted card from Deck");
+                    DisplayDeckCards(1,deckId,profileID);
+                });
+            })
+
+            $("#mdeck-list").on("click",".mdeck-edit",function(){
+                var deckID = parseInt($(this).attr("data-id"));
+                var name = $(this).attr("data-deck")
+                /*
+                var name = $(this).attr("data-deck")
+                webservices.GetProfiles(profileID,function(r){
+                    $("#DeckName").val(name)
+                    $("#DeckUser").val(r.username);
+                    $("#DeckName").attr("deckId",deckID)
+                    $("#DeckUser").attr('user-id',r.id);
+
+                });*/
+                console.log(deckID)
+                $("#mdeck-name").text(name)
+                DisplayMonsterDeckCards(1,deckID)
+
+            });
+            $("#deck-list").on("click",".deck-edit",function(){
+                var deckID = parseInt($(this).attr("data-id"));
+                var profileID = parseInt($(this).attr("data-profile"));
+                var name = $(this).attr("data-deck")
+                /*
+                var name = $(this).attr("data-deck")
+                webservices.GetProfiles(profileID,function(r){
+                    $("#DeckName").val(name)
+                    $("#DeckUser").val(r.username);
+                    $("#DeckName").attr("deckId",deckID)
+                    $("#DeckUser").attr('user-id',r.id);
+
+                });*/
+                $("#deck-name").text(name)
+                DisplayDeckCards(1,deckID,profileID)
+
+            });
+
+            $("#select-user").on("click","a",function(){
+                $("#DeckUser").val($(this).attr('user-name'));
+                    $("#DeckUser").attr('user-id',$(this).attr('user-id'));
+            });
+
+            $("#save").click(function(){
+                var deckName = $("#DeckName").val()
+                var userId = parseInt($("#DeckUser").attr('user-id'));
+                            let query = {
+                table:"decks",
+                data:{
+                    name:"'"+webservices.mysql_real_escape_string(deckName)+"'",
+                    profileId: userId,
+                    projectId: 1
+                }
+                }
+            webservices.Insert(query,()=>{
+                DisplayDeckList();
+                THEHUB.NotifSuccess("Success","Added deck");
+            },(err)=>{console.log(err)},"updated-decks");
+            })
+
+            
+            $("#msave").click(function(){
+                var deckName = $("#mDeckName").val()
+                            let query = {
+                table:"monsterDecks",
+                data:{
+                    name:"'"+webservices.mysql_real_escape_string(deckName)+"'",
+                    projectId: 1
+                }
+                }
+            webservices.Insert(query,()=>{
+                DisplayDeckList();
+                THEHUB.NotifSuccess("Success","Added Monster deck");
+            },(err)=>{console.log(err)},"updated-decks");
+            })
+
+            webservices.Start(function(){
+
+                webservices.GetProfiles(undefined,function(r){
+                    $("#select-user").append('<a class="dropdown-item" href="#" user-name="'+r.username+'" user-id="'+r.id+'">'+r.username+'</a>');
+                });
+                DisplayDeckList();
+            });
+        }
+    </script>
+</body>
+
+</html>

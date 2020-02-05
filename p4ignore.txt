@@ -1,0 +1,96 @@
+#To set the p4 ignore file run this command:
+#p4 set P4IGNORE=p4ignore.txt
+
+*.gnf
+*.sb
+*.sdb
+
+#log files
+*.log
+*.tlog
+
+*.tmp
+*.rar
+
+# Prerequisites
+*.d
+*.vcxproj.user
+*.user
+
+# Compiled Object files
+*.res
+*.slo
+*.lo
+*.o
+*.obj
+!*/Resources/*.obj
+!*/Resources/*/*.obj
+!*/Resources/*/*/*.obj
+*.idb
+*.ilk
+**/bin/**
+
+# Precompiled Headers
+*.gch
+*.pch
+*.ipch
+
+
+# Debug Data
+*.pdb
+*.VC.db
+*.VC.opendb
+*.VC.db-*
+*.db
+*.lastbuildstate
+codedb.lck
+*.iobj
+*.ipdb
+*.sbr
+*.bsc
+
+# Compiled Dynamic libraries
+*.so
+*.suo
+*.dylib
+
+
+*/.git/*
+
+#the HUB
+**/node_modules/**/*.*
+**/node_modules/**/*
+
+#VisualGDBMemes
+*/CodeDB/*
+*/CodeDB/*/*
+*/CodeDB/*/*/*
+*/VisualGDBCache/*
+*/VisualGDBCache/*/*
+*/VisualGDBCache/*/*/*
+*.log
+SourceCache.dat
+*/SourceCache.dat
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+
+
+
+# Executables
+*.exe
+*.out
+*.app
+*.elf
+
+#the learning dx12 thing
+**/build_vs2017/**.*
+
+
+# The Hub Tool ignores
+Tools/thehub

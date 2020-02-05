@@ -1,0 +1,88 @@
+.notification{
+    position:fixed;
+    top:20%;
+    left:0;
+    text-align:left;
+    padding: 21px;
+    background-color:#fff;
+    border-radius:4px;
+    max-width: 500px;
+    width: fit-content;
+    box-shadow: 1px 7px 14px -5px rgba(0,0,0,0.2);
+    z-index:100;
+    display:none;
+  }
+.notif-active {
+    display:block;
+    -webkit-animation: fadein 4s;
+    -moz-animation:    fadein 4s;
+    -o-animation:      fadein 4s;
+    animation:         fadein 4s;
+    animation-fill-mode: forwards;
+}
+  
+  @-webkit-keyframes fadein {
+    0%   { transform: translateX(-500px); }
+    30% { transform: translateX(0px); }
+    40% { transform: translateX(0px); }
+    100%   { transform: translateX(-500px); }
+  }
+  @-moz-keyframes fadein {
+    0%   { transform: translateX(-500px); }
+    30% { transform: translateX(0px); }
+    40% { transform: translateX(0px); }
+    100%   { transform: translateX(-500px); }
+  }
+  @-o-keyframes fadein {
+    0%   { transform: translateX(-500px); }
+    30% { transform: translateX(0px); }
+    40% { transform: translateX(0px); }
+    100%   { transform: translateX(-500px); }
+  }
+  @keyframes fadein {
+    0%   { transform: translateX(-500px); }
+    30% { transform: translateX(0px); }
+    40% { transform: translateX(0px); }
+    100%   { transform: translateX(-500px); }
+  }
+
+
+
+.notif,
+.notification:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+  border-top-right-radius:4px;
+  border-bottom-right-radius: 4px;
+}
+
+.notification .notif-head{
+    color: #3e3e3e;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
+.notification .notif-body {
+    font-size: 14px;
+    margin-top: 0;
+  margin-bottom: 0;
+    color: #878787;
+}
+
+.notif-success:after{
+        background-color:#2BDE3F;
+}
+
+  .notif-info:after{
+    background-color:#1D72F3;
+  }
+  
+  
+  .notif-fail:after{
+    background-color:#FF9494;
+  }

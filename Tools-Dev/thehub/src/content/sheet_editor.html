@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>The HUB</title>
+    <!-- bootsrap css include-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- font awesome for icons:-->
+    <link rel="stylesheet" href="../css/fontawesome.css">
+    <link rel="stylesheet" href="../css/notification.css">
+
+    <style>
+        html,
+        body {
+            height: 95%;
+        }
+
+        .titlebar {
+            -webkit-user-select: none;
+            -webkit-app-region: drag;
+        }
+
+        .titlebar-button {
+            -webkit-app-region: no-drag;
+        }
+
+        input[type='checkbox'] {
+            border: none !important;
+            display: block;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+
+        }
+
+        #download-info{
+            position:fixed;
+            top: 70px;
+            left:16px;
+            right:16px;
+            display:inline;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- header-->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark titlebar">
+            <a class="navbar-brand" href="#"></a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a id="download-btn" class="titlebar-button project-new  btn btn-primary nav-link d-none  text-light" href="#"><i
+                            class="fas fa-download"></i>
+                        Sync with Database</a>
+                        <a id="renew-session-btn" class="titlebar-button btn btn-danger project-new nav-link d-none text-light" href="#"><i
+                            class="fas fa-user"></i>
+                        Renew Session with Google</a>
+                    <div class="spinner-grow text-warning d-none" id="downloader" role="status">
+                                <span class="sr-only">Loading...</span>
+                    </div>
+                </li>
+            </ul>
+            <div class="btn-group" role="group">
+                <button value="true" id="min-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-minimize text-light"></i></button>
+                <button value="true" id="max-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="fas fa-window-maximize text-light"></i></button>
+                <button value="true" id="restore-btn" class="titlebar-button btn btn-default my-2 my-sm-0"><i
+                        class="far fa-window-restore text-primary"></i></button>
+                <button value="true" id="close-btn" class="titlebar-button btn  btn-default my-2 my-sm-0"><i
+                        class="far fa-window-close text-warning"></i></button>
+            </div>
+        </nav>
+    </header>
+    <!-- /header-->
+    <!-- main-->
+    <main role='main' class=" h-100" style="margin-top:64px;">
+        <div class="d-flex justify-content-center" id="loader">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-danger" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-warning" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        <div class="spinner-grow text-success" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="card justify-content-center d-none" id="download-info">
+            <div class="card-body text-info text-center">
+                    <i class="far fa-check-circle text-success"></i> We have downloaded <span id="cards-number">0</span> cards and created <span id="new-cards-number">0</span> new cards. We have created <span id="scripts-number">0</span> new scripts or updated <span id="updates-number">0</span> old once.<br><span class="text-danger">We also deleted <span id="deleted-scripts">0</span> scripts.</span>
+                <a href="#" id="close"><i class="fas fa-times float-right"></i></a>
+            </div>
+        </div>
+
+        <webview class="h-100 d-none" nodeintegration id='webview'></webview>
+    </main>
+    <!--/main-->
+
+    <!-- electron compatible:-->
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; } 
+    </script>
+    <!-- /electron compatible-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.min.js"></script>
+    <!-- electron compatible:-->
+    <script>if (window.module) module = window.module;</script>
+
+    <script>
+        const rendering = require("../js/redering.js");
+        const Sheets = require("../js/google-sheets.js");
+        const G = require("../js/google-utils.js");
+        const THEHUB = require("../js/thehub.js");
+        THEHUB.ParseAppArguments(
+            {
+                arguemnt: "--dev-mode", callback: () => {
+                    $("#build-li").html("");
+                }
+            }
+        );
+
+        THEHUB.LoadProjectFromCookies();
+
+        THEHUB.OnCookiesLoaded((project) => {
+            THEHUB.ValidateProjectAndLoad();
+        });
+
+        THEHUB.OnProjectValidationError((err, project) => {
+            $("#project-header-name").text("Project: " + project.name);
+            $("main").html("<div class='container'><div class='alert alert-danger'><i class='fas fa-exclamation-triangle'></i> <strong>Oops...</strong> " + err + " <br><br><a  class='back-btn btn btn-secondary text-light' href='project_chooser.html'><i class='fas fa-reply'></i> Back</a></div></div>");
+        });
+
+
+        const webview = document.querySelector('webview')
+
+        THEHUB.OnProjectValidated((project) => {
+            Sheets.LoadGoogleDocument();
+
+            $("#download-btn").click(() => {
+                $("#download-btn").addClass("d-none");
+                $("#downloader").removeClass("d-none");
+                Sheets.Download((data)=>{
+                    //console.log(data)
+                    THEHUB.ValidateIfCardsHaveScript(data);
+                },(err)=>{
+                    $("#downloader").addClass("d-none");
+                    if(err.response.status == 401){
+                        $("#renew-session-btn").removeClass("d-none");
+                    }else{
+
+                    }
+                });
+            });
+
+            $("#renew-session-btn").click(()=>{
+                G.googleSignIn(function(user){
+                    $("#download-btn").removeClass("d-none");
+                    $("#renew-session-btn").addClass("d-none");
+                });
+            });
+
+            $("#close").click(function(){
+                $("#download-info").removeClass("d-flex");
+                $("#download-info").addClass("d-none");
+                //$("#download-info").remove();
+            })
+        });
+        document.onreadystatechange = () => {
+            if (document.readyState == "complete") {
+                rendering.handleWindowControls();
+            }
+        }
+    </script>
+</body>
+
+</html>

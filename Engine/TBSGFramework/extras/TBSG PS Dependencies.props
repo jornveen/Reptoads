@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <PS_Compile_ComputeShader>orbis-wave-psslc.exe "%(FullPath)" -profile sce_cs_orbis -o "$(SolutionDir)..\Projects\froggy\Client\data\Shaders\bin\%(Filename).sb"</PS_Compile_ComputeShader>
+    <PS_Compile_VertexShader>orbis-wave-psslc.exe %(FullPath) -profile sce_vs_vs_orbis -o $(SolutionDir)..\Projects\froggy\Client\data\Shaders\bin\%(Filename).sb</PS_Compile_VertexShader>
+    <PS_Compile_PixelShader>orbis-wave-psslc.exe %(FullPath) -profile sce_ps_orbis -o $(SolutionDir)..\Projects\froggy\Client\data\Shaders\bin\%(Filename).sb</PS_Compile_PixelShader>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>PLATFORM_PS=1;USE_PROFILER=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OptimizationLevel>Level3</OptimizationLevel>
+      <InlinedScopes>false</InlinedScopes>
+      <CppLanguageStd>Cpp14</CppLanguageStd>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\shaderWave;$(SolutionDir)external\toolkit\lib;$(SolutionDir)build\Enet\$(Platform)\$(configuration)\bin;$(SolutionDir)build\TBSGFramework\$(Platform)\$(configuration)\bin;$(SolutionDir)external\FMOD\lib\$(Platform);$(SolutionDir)build\NetworkLib\$(Platform)\$(configuration)\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libLua.a;ptl.a;toolkit.a;libfmod.a;NetworkLib.a;libSceShaderWavePsslc.lib;-lSceVideoOut_stub_weak;-lSceGnm;-lSceGnmx;-lSceGpuAddress;-lSceShaderBinary;-lSceGnf;-lSceGnmDriver_stub_weak;-lSceMat_stub_weak;-lSceNet_stub_weak;-lSceNetCtl_stub_weak;-lSceNetDebug_stub_weak;-lScePad_stub_weak;-lSceUserService_stub_weak;-lSceFios2_stub_weak;-lSceSecure;-lSceSystemService_stub;TBSGFramework.a;-lSceHdrScopesDbg_stub_weak;-lSceSysmodule_stub_weak;-lSceFontFt_stub_weak;-lSceFont_stub_weak;-lSceCes;Enet.a;-lScePosix_stub_weak;-lSceImeDialog_stub_weak;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="PS_Compile_ComputeShader">
+      <Value>$(PS_Compile_ComputeShader)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="PS_Compile_VertexShader">
+      <Value>$(PS_Compile_VertexShader)</Value>
+    </BuildMacro>
+    <BuildMacro Include="PS_Compile_PixelShader">
+      <Value>$(PS_Compile_PixelShader)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

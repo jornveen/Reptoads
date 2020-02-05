@@ -1,0 +1,67 @@
+html,body {
+    height: 100%;
+    padding-top: 32px;
+  }
+.titlebar {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+
+.titlebar-button {
+    -webkit-app-region: no-drag;
+}
+
+.hide {
+    pointer-events: none;
+    color: #a7a7a7;
+}
+
+#listOfProjects li p{
+    cursor: pointer;
+}
+span.path{
+    letter-spacing: 2px;
+    font-style: italic;
+}
+#listOfProjects li:hover{
+    font-weight:bold;
+}
+.file-inspector-item p{
+    font-size:16px;
+}
+.file-inspector-item:hover{
+    font-weight:bold;
+    cursor: pointer;
+}
+
+.btn-darkgreen{
+    background:#44897A;
+    color:#fff;
+}
+
+
+#sorter li{
+    padding-left: 5px;
+}
+
+.editors {
+    height: 500px;
+    width: 49.7%;
+    display: inline-block;
+}
+
+.modal-lg {
+    width: 800px;
+}
+
+#config-editor-server, #config-editor-client {
+    height: 500px;
+}
+
+input[type='checkbox'] {
+    border: none !important;
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+
+}

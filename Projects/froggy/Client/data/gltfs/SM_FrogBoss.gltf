@@ -1,0 +1,191 @@
+{
+    "asset": {
+        "version": "2.0",
+        "generator": "Open Asset Import Library (assimp v3.1.193236683)"
+    },
+    "accessors": [
+        {
+            "bufferView": 0,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 30972,
+            "type": "VEC3",
+            "max": [
+                0.570695698261261,
+                0.9999999403953552,
+                0.865551233291626
+            ],
+            "min": [
+                -0.5706957578659058,
+                -1.0,
+                -0.8655513525009155
+            ]
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 30972,
+            "type": "VEC3",
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -0.9998419880867004
+            ]
+        },
+        {
+            "bufferView": 2,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 30972,
+            "type": "VEC2",
+            "max": [
+                0.9987729787826538,
+                0.9962810277938843
+            ],
+            "min": [
+                0.0000019999999949504856,
+                0.005899012088775635
+            ]
+        },
+        {
+            "bufferView": 3,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 30972,
+            "type": "SCALAR",
+            "max": [
+                30971.0
+            ],
+            "min": [
+                0.0
+            ]
+        }
+    ],
+    "buffers": [
+        {
+            "byteLength": 1053048,
+            "uri": "C:/Users/Gerson/Desktop/TBSG/SM_M2019_bossRig.bin"
+        }
+    ],
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteOffset": 0,
+            "byteLength": 371664,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 371664,
+            "byteLength": 371664,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 743328,
+            "byteLength": 247776,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 991104,
+            "byteLength": 61944,
+            "target": 34963
+        }
+    ],
+    "images": [
+        {
+            "uri": "T_M2019_boss4.png"
+        }
+    ],
+    "materials": [
+        {
+            "name": "SM_M2019_bossRig_lambert13SG",
+            "pbrMetallicRoughness": {
+                "baseColorTexture": {
+                    "index": 0
+                },
+                "baseColorFactor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "metallicFactor": 0.0
+            }
+        }
+    ],
+    "meshes": [
+        {
+            "name": "FrogBossObject01",
+            "primitives": [
+                {
+                    "mode": 4,
+                    "material": 0,
+                    "indices": 3,
+                    "attributes": {
+                        "POSITION": 0,
+                        "NORMAL": 1,
+                        "TEXCOORD_0": 2
+                    }
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "matrix": [
+                346.20550537109377,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                346.20550537109377,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                346.20550537109377,
+                0.0,
+                -11.145721435546875,
+                337.3667297363281,
+                67.07180786132813,
+                1.0
+            ],
+            "children": [
+                1,
+                2
+            ]
+        },
+        {
+            "name": "g default"
+        },
+        {
+            "name": "g FrogBossObject01",
+            "mesh": 0
+        }
+    ],
+    "samplers": [
+        {}
+    ],
+    "scenes": [
+        {
+            "nodes": [
+                0
+            ]
+        }
+    ],
+    "textures": [
+        {
+            "source": 0,
+            "sampler": 0
+        }
+    ],
+    "scene": 0
+}
